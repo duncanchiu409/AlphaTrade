@@ -1,0 +1,16 @@
++--------------------------+----------+
+| Parameters               | Values   |
+|--------------------------+----------|
+| Total Trade Scripts      | 1        |
+| Total Trade              | 2        |
+| PNL                      | 32432.91 |
+| Winners                  | 1        |
+| Losers                   | 1        |
+| % Win Ratio              | 50.0     |
+| Total Profit             | 38352.68 |
+| Total Loss               | -5919.77 |
+| Average Profit per Trade | 38352.68 |
+| Average Loss per Trade   | -5919.77 |
+| Average PNL per Trade    | 16216.46 |
+| Risk Reward              | 1:6.48   |
++--------------------------+----------+
