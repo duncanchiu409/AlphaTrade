@@ -30,7 +30,7 @@ class StopLoss(BaseRiskManagement):
 			else:
 				return False
 
-	def trigger(self, row, data, charge):
+	def trigger(self, row, data):
 		exit_price = self.stop_loss.get(row['Equity Name'])
 		row.update({
 				'Exit Time': data['Date'],
@@ -38,7 +38,7 @@ class StopLoss(BaseRiskManagement):
 				'Exit Type': 'Stop Loss'
 		})
 		multi = -1 if row['Trade'] == 'Short' else 1
-		pnl = multi * (exit_price - row['Entry Price']) * row['Quantity'] - charge
+		pnl = multi * (exit_price - row['Entry Price']) * row['Quantity']
 		row.update({
 				'PNL': round(pnl, 3),
 				'% PNL': round(pnl / row['Position Size'] * 100, 3),

@@ -6,6 +6,7 @@ from .APIs import BaseAPIModel
 from .portfolioAllocations import BasePortfolioAllocation
 from .strategies import BaseHold, BaseShort, EMAGoldenCrossSignal, EMAReverseGoldenCrossSignal
 from .riskManagement import BaseRiskManagement, StopLoss
+from .chargeModel import BaseChargeModel, SimpleChargeModel
 
 class BaseModel:
     def __init__(self):
@@ -19,9 +20,11 @@ class BaseModel:
         self.portfolio_management = BasePortfolioAllocation(50000)
         self.alpha_model = BaseHold()
         self.risk_control = BaseRiskManagement()
+        self.charge_system = BaseChargeModel()
 
     def prepare_equities(self):
-        self.equities = self.equity_selection_management.prepare_equities()
+        if not hasattr(self, 'equities'):
+            self.equities = self.equity_selection_management.prepare_equities()
 
     def filter_equities(self):
         self.filtered_equities = []
@@ -72,12 +75,23 @@ class TestStopLossModel(BaseModel):
         super().__init__()
         self.start_date = '2022-01-01'
         self.end_date = '2023-01-01'
-        self.model_name = 'Test Stop Loss Model'
-        self.risk_control = StopLoss(20)
+        self.equities = ['COIN']
+        self.model_name = 'Test Charge Model'
+        self.charge_system = StopLoss(20)
 
-class BenchMarkModel(BaseModel):
+class TestChargeModel(BaseModel):
     def __init__(self):
         super().__init__()
         self.start_date = '2022-01-01'
         self.end_date = '2023-01-01'
-        self.model_name = 'Bench Stop Loss Model'
+        self.equities = ['COIN']
+        self.model_name = 'Test Charge Model'
+        self.charge_system = SimpleChargeModel(20)
+
+class BenchmarkModel(BaseModel):
+    def __init__(self):
+        super().__init__()
+        self.start_date = '2022-01-01'
+        self.end_date = '2023-01-01'
+        self.equities = ['COIN']
+        self.model_name = 'Benchmark Charge Model'

@@ -47,18 +47,19 @@ class BackTest:
             'Position Size': position
         })
 
-    def exit_equity(self, exit_time, exit_price, exit_type, charge):
+    def exit_equity(self, exit_time, exit_price, exit_type):
         self.tradelog.update({
             'Exit Time': exit_time,
             'Exit Price': round(exit_price, 2),
-            'Exit Type': exit_type
+            'Exit Type': exit_type,
+            'Holding Period': exit_time - self.tradelog['Entry Time']
         })
         multi = -1 if self.tradelog['Trade'] == 'Short' else 1
+        charge = self.model.charge_system.calculate_charge(self.tradelog)
         pnl = multi * (exit_price - self.tradelog['Entry Price']) * self.tradelog['Quantity'] - charge
         self.tradelog.update({
             'PNL': round(pnl, 3),
             '% PNL': round(pnl / self.tradelog['Position Size'] * 100, 3),
-            'Holding Period': exit_time - self.tradelog['Entry Time']
         })
         self.trading_records = pd.concat([self.trading_records, pd.DataFrame([self.tradelog])], ignore_index=True)
         release = round(self.tradelog['Position Size'] + pnl, 3)
@@ -127,7 +128,9 @@ class BackTest:
 
                     # Process Risk Management System
                     if self.model.risk_control.check(self.tradelog, row):
-                        sl = self.model.risk_control.trigger(self.tradelog, row, 0.0)
+                        sl = self.model.risk_control.trigger(self.tradelog, row)
+                        sl['PNL'] = round(sl['PNL'] - self.model.charge_system.calculate_charge(row), 3)
+                        sl['% PNl'] = round(sl['PNL'] / sl['Position Size'] * 100, 3)
                         self.tradelog.update(sl)
                         self.trading_records = pd.concat([self.trading_records, pd.DataFrame([self.tradelog])], ignore_index=True)
                         release = round(self.tradelog['Position Size'] + self.tradelog['PNL'], 3)
@@ -135,7 +138,7 @@ class BackTest:
                         self.model.portfolio_management.release(release)
 
                     if row['Position'] == 'Exit' and self.tradelog['Equity Name'] is not None:
-                        release = self.exit_equity(date, row['Open'], 'Complete', 0.0)
+                        release = self.exit_equity(date, row['Open'], 'Complete')
                         self.model.portfolio_management.release(release)
 
                     multi = -1 if row['Trade'] == 'Short' else 1
