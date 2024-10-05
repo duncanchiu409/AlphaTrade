@@ -124,19 +124,27 @@ class BackTest:
                     if row['Position'] == 'Entry':
                         allocation = self.model.portfolio_management.allocate()
                         self.enter_equity(row['Equity Name'], row['Trade'], date, row['Open'], allocation)
-                    elif row['Position'] == 'Exit' and self.tradelog['Equity Name'] is not None:
+
+                    # Process Risk Management System
+                    if self.model.risk_control.check(self.tradelog, row):
+                        sl = self.model.risk_control.trigger(self.tradelog, row, 0.0)
+                        self.tradelog.update(sl)
+                        self.trading_records = pd.concat([self.trading_records, pd.DataFrame([self.tradelog])], ignore_index=True)
+                        release = round(self.tradelog['Position Size'] + self.tradelog['PNL'], 3)
+                        self.tradelog = {col: None for col in self.records_columns}
+                        self.model.portfolio_management.release(release)
+
+                    if row['Position'] == 'Exit' and self.tradelog['Equity Name'] is not None:
                         release = self.exit_equity(date, row['Open'], 'Complete', 0.0)
                         self.model.portfolio_management.release(release)
 
                     multi = -1 if row['Trade'] == 'Short' else 1
                     self.portfolio_log['Allocated PNL'] += 0.0 if self.tradelog['Entry Price'] == None else round(multi * (row['Close'] - self.tradelog['Entry Price']) * self.tradelog['Quantity'], 3)
 
-                self.portfolio_log.update({
-                    'Cash': self.model.portfolio_management.free_capital,
-                    'Allocated': self.tradelog['Position Size'],
-                    'Allocated % PNL': round(self.portfolio_log['Allocated PNL'] / self.portfolio_log['Allocated'] * 100, 3) if self.portfolio_log['Allocated'] else 0.0,
-                    'Total': round(self.portfolio_log['Cash'] + self.portfolio_log['Allocated'] + self.portfolio_log['Allocated PNL'], 3)
-                })
+                self.portfolio_log['Cash'] = self.model.portfolio_management.free_capital,
+                self.portfolio_log['Allocated'] = self.tradelog['Position Size'] if self.tradelog.get('Position Size') != None else 0.0,
+                self.portfolio_log['Allocated % PNL'] = round(self.portfolio_log['Allocated PNL'] / self.portfolio_log['Allocated'] * 100, 3) if not self.portfolio_log['Allocated'] else 0.0,
+                self.portfolio_log['Total'] = round(self.portfolio_log['Cash'] + self.portfolio_log['Allocated'] + self.portfolio_log['Allocated PNL'], 3)
                 self.portfolio_log['Total PNL'] = round(self.portfolio_log['Total'] - self.model.portfolio_management.starting_capital, 3)
                 self.portfolio_log['Total % PNL'] = round(self.portfolio_log['Total PNL'] / self.model.portfolio_management.starting_capital, 3)
 
