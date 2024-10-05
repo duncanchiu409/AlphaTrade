@@ -5,6 +5,7 @@ from .equitiesFilters import BaseEquityFilter
 from .APIs import BaseAPIModel
 from .portfolioAllocations import BasePortfolioAllocation
 from .strategies import BaseHold, BaseShort, EMAGoldenCrossSignal, EMAReverseGoldenCrossSignal
+from .riskManagement import BaseRiskManagement, StopLoss
 
 class BaseModel:
     def __init__(self):
@@ -17,6 +18,7 @@ class BaseModel:
         self.api_model_management = BaseAPIModel()
         self.portfolio_management = BasePortfolioAllocation(50000)
         self.alpha_model = BaseHold()
+        self.risk_control = BaseRiskManagement()
 
     def prepare_equities(self):
         self.equities = self.equity_selection_management.prepare_equities()
@@ -64,3 +66,18 @@ class EMAReverseGoldenCrossoverModel(BaseModel):
         super().__init__()
         self.model_name = 'Reverse EMAs Golden Crossover Model'
         self.alpha_model = EMAReverseGoldenCrossSignal(20, 50)
+
+class TestStopLossModel(BaseModel):
+    def __init__(self):
+        super().__init__()
+        self.start_date = '2022-01-01'
+        self.end_date = '2023-01-01'
+        self.model_name = 'Test Stop Loss Model'
+        self.risk_control = StopLoss(20)
+
+class BenchMarkModel(BaseModel):
+    def __init__(self):
+        super().__init__()
+        self.start_date = '2022-01-01'
+        self.end_date = '2023-01-01'
+        self.model_name = 'Bench Stop Loss Model'
