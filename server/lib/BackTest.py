@@ -4,67 +4,105 @@ import yfinance as yf
 from yfinance import shared
 import os
 from tabulate import tabulate
+import shortuuid
 
 class BackTest:
     def __init__(self, model):
         self.model = model()
         self.portfolio_columns = ['Date', 'Cash', 'Allocated PNL', 'Allocated % PNL', 'Allocated', 'Total PNL', 'Total % PNL', 'Total']
-        self.records_columns = ['Equity Name', 'Trade', 'Entry Time', 'Entry Price', 'Exit Time', 'Exit Price', 'Exit Type', 'Quantity', 'Position Size', 'PNL', '% PNL', 'Holding Period']
+        self.records_columns = ['Order no', 'Equity Name', 'Trade', 'Entry Time', 'Entry Price', 'Exit Time', 'Exit Price', 'Exit Type', 'Quantity', 'Position Size', 'PNL', '% PNL', 'Holding Period']
         self.trading_records = pd.DataFrame(columns=self.records_columns)
         self.portfolio_records = pd.DataFrame(columns=self.portfolio_columns)
-        self.tradelog = {col: None for col in self.records_columns}
+        self.tradelog = pd.DataFrame(columns=self.records_columns)
 
     def load_dates(self):
         self.dates = {}
         for interval in self.model.universe_management.intervals:
             try:
-                df = yf.download('QQQ', start=self.model.start_date, end=self.model.end_date, interval=interval)
+                df = pd.read_csv('models/' + self.model.model_name + '/data/QQQ-' + interval + '.csv', parse_dates=['Date'])
                 if 'QQQ' not in shared._ERRORS:
-                    self.dates[interval] = df.index
+                    self.dates[interval] = df['Date']
+                    pass
                 else:
                     raise Exception('Error: loading dates')
             except Exception as e:
                 print(f"Error loading dates for interval {interval}: {e}")
 
     def prepare_run(self):
+        os.makedirs('models/', exist_ok=True)
         if os.path.exists(self.model.model_name):
             for folder in ['data', 'analysis', 'summary']:
-                folder_path = f"{self.model.model_name}/{folder}"
+                folder_path = f"models/{self.model.model_name}/{folder}"
                 for file in os.listdir(folder_path):
                     os.remove(os.path.join(folder_path, file))
         else:
             for folder in ['data', 'analysis', 'summary']:
-                os.makedirs(f"{self.model.model_name}/{folder}", exist_ok=True)
+                os.makedirs(f"models/{self.model.model_name}/{folder}", exist_ok=True)
 
-    def enter_equity(self, equity_name, trade, entry_time, entry_price, position):
-        self.tradelog = {col: None for col in self.records_columns}
-        self.tradelog.update({
-            'Equity Name': equity_name,
-            'Trade': trade,
-            'Entry Time': entry_time,
-            'Entry Price': round(entry_price, 2),
-            'Quantity': round(position / entry_price, 3),
-            'Position Size': position
-        })
+    def load_rows(self, row):
+        return np.logical_and(self.tradelog['Equity Name'] == row['Equity Name'], self.tradelog['Trade'] == row['Trade'])
 
-    def exit_equity(self, exit_time, exit_price, exit_type):
-        self.tradelog.update({
-            'Exit Time': exit_time,
-            'Exit Price': round(exit_price, 2),
-            'Exit Type': exit_type,
-            'Holding Period': exit_time - self.tradelog['Entry Time']
-        })
-        multi = -1 if self.tradelog['Trade'] == 'Short' else 1
-        charge = self.model.charge_system.calculate_charge(self.tradelog)
-        pnl = multi * (exit_price - self.tradelog['Entry Price']) * self.tradelog['Quantity'] - charge
-        self.tradelog.update({
-            'PNL': round(pnl, 3),
-            '% PNL': round(pnl / self.tradelog['Position Size'] * 100, 3),
-        })
-        self.trading_records = pd.concat([self.trading_records, pd.DataFrame([self.tradelog])], ignore_index=True)
-        release = round(self.tradelog['Position Size'] + pnl, 3)
-        self.tradelog = {col: None for col in self.records_columns}
+    def enter_equity(self, row, allocation):
+        row = {
+            'Order no': shortuuid.uuid(),
+            'Equity Name': row['Equity Name'],
+            'Trade': row['Trade'],
+            'Entry Time': row['Date'],
+            'Entry Price': round(row['Open'], 2),
+            'Quantity': round(allocation / row['Open'], 3),
+            'Position Size': allocation
+        }
+        self.tradelog = pd.concat([self.tradelog, pd.DataFrame([row])], ignore_index=True)
+
+    def exit_equity(self, row):
+        # Selling Mechanism
+        i = self.load_rows(row)
+        log = self.tradelog[i].head(1)
+
+        self.tradelog = self.tradelog[self.tradelog.ne(log)]
+        self.tradelog.dropna(subset=['Equity Name'], inplace=True)
+
+        multi = -1 if row['Trade'] == 'Short' else 1
+        log['Exit Time'] = row['Date']
+        log['Exit Price'] = round(row['Close'], 2)
+        log['Exit Type'] = 'Complete'
+        log['Holding Period'] = row['Date'] - log['Entry Time']
+        charge = self.model.charge_system.calculate_charge(log)
+        log['PNL'] = round(multi * (log['Exit Price'] - log['Entry Price']) * log['Quantity'] - charge, 3)
+        log['% PNL'] = round(log['PNL'] / log['Position Size'] * 100, 2)
+        self.trading_records = pd.concat([self.trading_records, log], ignore_index=True)
+        release = log['Position Size'].sum() + log['PNL'].sum()
         return release
+
+    def check(self, row):
+        i = self.load_rows(row)
+        return self.model.risk_control.check(self.tradelog[i], row)
+
+    def trigger(self, row):
+        i = self.load_rows(row)
+        sl = self.model.risk_control.trigger(self.tradelog[i], row)
+        self.tradelog[i] = sl
+        sl = self.tradelog[self.tradelog['Exit Type'].notna()]
+        self.tradelog = self.tradelog[self.tradelog['Exit Type'].isna()].copy()
+        sl['PNL'] = sl['PNL'] - self.model.charge_system.calculate_charge(sl)
+        sl['PNL'] = sl['PNL'].astype(float).round(3)
+        sl['% PNL'] = sl['PNL'] / sl['Position Size'] * 100
+        sl['% PNL'] = sl['% PNL'].astype(float).round(2)
+        self.trading_records = pd.concat([self.trading_records, sl], ignore_index=True)
+        release = sl['Position Size'].sum() + sl['PNL'].sum()
+        return release
+
+    def prepare_portfolio_log(self, date):
+        self.portfolio_log = {col: 0.0 for col in self.portfolio_columns}
+        self.portfolio_log['Date'] = date
+        multi = self.tradelog['Trade'].map(lambda x: -1 if x == 'Short' else 1)
+        self.portfolio_log['Allocated PNL'] = round(((self.tradelog['Exit Price'] - self.tradelog['Entry Price']) * multi * self.tradelog['Quantity']).sum(), 3)
+        self.portfolio_log['Cash'] = round(self.model.portfolio_management.free_capital, 3)
+        self.portfolio_log['Allocated'] = round(self.tradelog['Position Size'].sum(), 3)
+        self.portfolio_log['Allocated % PNL'] = round(self.portfolio_log['Allocated PNL'] / self.portfolio_log['Allocated'] * 100, 3) if self.portfolio_log['Allocated'] != 0.0 else 0.0
+        self.portfolio_log['Total'] = round(self.portfolio_log['Cash'] + self.portfolio_log['Allocated'] + self.portfolio_log['Allocated PNL'], 3)
+        self.portfolio_log['Total PNL'] = round(self.portfolio_log['Total'] - self.model.portfolio_management.starting_capital, 3)
+        self.portfolio_log['Total % PNL'] = round(self.portfolio_log['Total PNL'] / self.model.portfolio_management.starting_capital * 100.0, 3)
 
     def stats(self):
         df = self.trading_records
@@ -103,55 +141,42 @@ class BackTest:
                 df = self.trading_records[self.trading_records['Equity Name'] == equity]
                 if not df.empty:
                     df = df.sort_values(by='Entry Time')
-                    df.to_csv(f"{self.model.model_name}/analysis/{equity}-{interval}.csv", index=None)
+                    df.to_csv(f"models/{self.model.model_name}/analysis/{equity}-{interval}.csv", index=None)
+
+        self.trading_records.sort_values(by='Entry Time').to_csv(f"models/{self.model.model_name}/summary/records.csv")
 
         self.portfolio_records.sort_values(by='Date', inplace=True)
-        self.portfolio_records.to_csv(f"{self.model.model_name}/summary/portfolio.csv", index=None)
+        self.portfolio_records.to_csv(f"models/{self.model.model_name}/summary/portfolio.csv", index=None)
 
-        with open(f"{self.model.model_name}/summary/table.txt", 'w') as f:
+        with open(f"models/{self.model.model_name}/summary/table.txt", 'w') as f:
             f.write(self.stats())
 
     def run(self):
         self.prepare_run()
         df = self.model.run()
+        df.to_csv(f"models/{self.model.model_name}/summary/execution.csv", index=None)
         self.load_dates()
         for interval, dates in self.dates.items():
             for date in dates:
-                self.portfolio_log = {col: 0.0 for col in self.portfolio_columns}
-                self.portfolio_log['Date'] = date
-
                 df_in_date = df[df['Date'] == date]
                 for _, row in df_in_date.iterrows():
                     if row['Position'] == 'Entry':
-                        allocation = self.model.portfolio_management.allocate()
-                        self.enter_equity(row['Equity Name'], row['Trade'], date, row['Open'], allocation)
+                        allocation = self.model.portfolio_management.allocate(self.tradelog)
+                        self.enter_equity(row, allocation)
 
                     # Process Risk Management System
-                    if self.model.risk_control.check(self.tradelog, row):
-                        sl = self.model.risk_control.trigger(self.tradelog, row)
-                        sl['PNL'] = round(sl['PNL'] - self.model.charge_system.calculate_charge(row), 3)
-                        sl['% PNl'] = round(sl['PNL'] / sl['Position Size'] * 100, 3)
-                        self.tradelog.update(sl)
-                        self.trading_records = pd.concat([self.trading_records, pd.DataFrame([self.tradelog])], ignore_index=True)
-                        release = round(self.tradelog['Position Size'] + self.tradelog['PNL'], 3)
-                        self.tradelog = {col: None for col in self.records_columns}
+                    if self.check(row):
+                        release = self.trigger(row)
                         self.model.portfolio_management.release(release)
 
-                    if row['Position'] == 'Exit' and self.tradelog['Equity Name'] is not None:
-                        release = self.exit_equity(date, row['Open'], 'Complete')
+                    if row['Position'] == 'Exit':
+                        release = self.exit_equity(row)
                         self.model.portfolio_management.release(release)
 
-                    multi = -1 if row['Trade'] == 'Short' else 1
-                    self.portfolio_log['Allocated PNL'] += 0.0 if self.tradelog['Entry Price'] == None else round(multi * (row['Close'] - self.tradelog['Entry Price']) * self.tradelog['Quantity'], 3)
+                    i = self.load_rows(row)
+                    self.tradelog.loc[i, 'Exit Price'] = row['Open']
 
-                self.portfolio_log['Cash'] = self.model.portfolio_management.free_capital
-                self.portfolio_log['Allocated'] = self.tradelog['Position Size'] if self.tradelog.get('Position Size') != None else 0.0
-                self.portfolio_log['Allocated % PNL'] = round(self.portfolio_log['Allocated PNL'] / self.portfolio_log['Allocated'] * 100, 3) if self.portfolio_log['Allocated'] != 0.0 else 0.0
-                self.portfolio_log['Total'] = round(self.portfolio_log['Cash'] + self.portfolio_log['Allocated'] + self.portfolio_log['Allocated PNL'], 3)
-                self.portfolio_log['Total PNL'] = round(self.portfolio_log['Total'] - self.model.portfolio_management.starting_capital, 3)
-                self.portfolio_log['Total % PNL'] = round(self.portfolio_log['Total PNL'] / self.model.portfolio_management.starting_capital, 3)
-
+                self.prepare_portfolio_log(date)
                 self.portfolio_records = pd.concat([self.portfolio_records, pd.DataFrame([self.portfolio_log])], ignore_index=True)
-                df = df[df['Date'] > date]
 
         self.give_analysis()

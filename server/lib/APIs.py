@@ -23,19 +23,15 @@ class BaseAPIModel:
 
         if not equities:
             return []
+        else:
+            equities.append('QQQ')
 
         for interval in intervals:
-            if len(equities) == 1:
-                df = yf.download(equities[0], start=start_date, end=end_date, interval=interval)
-                if equities[0] not in shared._ERRORS:
-                    df.to_csv(f"{model_name}/data/{equities[0]}-{interval}.csv")
-                    succeed_equities.add(equities[0])
-                continue
-
             df = yf.download(" ".join(equities), start=start_date, end=end_date, interval=interval).swaplevel(0, 1, axis=1)
             for name in equities:
                 if name not in shared._ERRORS:
-                    df[name].to_csv(f"{model_name}/data/{name}-{interval}.csv")
+                    df[name].to_csv(f"models/{model_name}/data/{name}-{interval}.csv")
                     succeed_equities.add(name)
-
+        succeed_equities.remove('QQQ')
+        succeed_equities = list(succeed_equities)
         return list(succeed_equities)

@@ -4,9 +4,9 @@ from .equitiesSelection import BaseEquitySelectionModel
 from .equitiesFilters import BaseEquityFilter
 from .APIs import BaseAPIModel
 from .portfolioAllocations import BasePortfolioAllocation
-from .strategies import BaseHold, BaseShort, EMAGoldenCrossSignal, EMAReverseGoldenCrossSignal
-from .riskManagement import BaseRiskManagement, StopLoss
-from .chargeModel import BaseChargeModel, SimpleChargeModel
+from .strategies import BaseHold, BaseShort
+from .riskManagement import BaseRiskManagement
+from .chargeModel import BaseChargeModel
 
 class BaseModel:
     def __init__(self):
@@ -35,14 +35,12 @@ class BaseModel:
         self.failed_equities = []
         after = self.api_model_management.get_equities_data(self.model_name, self.equities, self.universe_management.intervals, self.start_date, self.end_date)
         self.failed_equities = [equity for equity in self.equities if equity not in after]
+        self.equities = after
 
     def prepare_signals(self):
         self.signals_columns = ['Date', 'Equity Name', 'Open', 'High', 'Low', 'Close', 'Position', 'Trade']
-        self.signals = pd.DataFrame(columns=self.signals_columns)
-        for interval in self.universe_management.intervals:
-            for equity in self.equities:
-                df = self.alpha_model.generate_signals(self.model_name, equity, interval)
-                self.signals = pd.concat([self.signals, df[self.signals_columns]], axis=0, ignore_index=True)
+        df = self.alpha_model.generate_signals(self.model_name, self.equities, self.universe_management.intervals)
+        self.signals = df[self.signals_columns]
         self.signals = self.signals.sort_values(by='Date')
 
     def run(self):
@@ -57,41 +55,3 @@ class BaseShortModel(BaseModel):
         super().__init__()
         self.model_name = 'Base Short Model'
         self.alpha_model = BaseShort()
-
-class EMAGoldenCrossoverModel(BaseModel):
-    def __init__(self):
-        super().__init__()
-        self.model_name = 'EMAs Golden Crossover Model'
-        self.alpha_model = EMAGoldenCrossSignal(20, 50)
-
-class EMAReverseGoldenCrossoverModel(BaseModel):
-    def __init__(self):
-        super().__init__()
-        self.model_name = 'Reverse EMAs Golden Crossover Model'
-        self.alpha_model = EMAReverseGoldenCrossSignal(20, 50)
-
-class TestStopLossModel(BaseModel):
-    def __init__(self):
-        super().__init__()
-        self.start_date = '2022-01-01'
-        self.end_date = '2023-01-01'
-        self.equities = ['COIN']
-        self.model_name = 'Test Charge Model'
-        self.charge_system = StopLoss(20)
-
-class TestChargeModel(BaseModel):
-    def __init__(self):
-        super().__init__()
-        self.start_date = '2022-01-01'
-        self.end_date = '2023-01-01'
-        self.equities = ['COIN']
-        self.model_name = 'Test Charge Model'
-        self.charge_system = SimpleChargeModel(20)
-
-class BenchmarkModel(BaseModel):
-    def __init__(self):
-        super().__init__()
-        self.start_date = '2022-01-01'
-        self.end_date = '2023-01-01'
-        self.equities = ['COIN']
-        self.model_name = 'Benchmark Charge Model'

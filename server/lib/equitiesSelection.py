@@ -3,4 +3,4 @@ class BaseEquitySelectionModel:
 		pass
 
 	def prepare_equities(self):
-		return ['NVDA']
+		return ['SPY']
