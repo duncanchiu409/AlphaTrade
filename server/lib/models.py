@@ -68,6 +68,7 @@ class BaseModel:
         self.filter_equities()
         self.prepare_equities_data()
         self.prepare_signals()
+        self.signals.to_csv(f"{self.model_base_path}/summary/execution.csv", index=None)
         return self.signals
 
 class BaseHoldModel(BaseModel):

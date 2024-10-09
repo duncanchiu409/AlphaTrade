@@ -3,7 +3,7 @@ import pandas as pd
 import yfinance as yf
 from yfinance import shared
 import os
-from tabulate import tabulate
+from tabulate import tabulate, SEPARATING_LINE
 import shortuuid
 
 class BackTest:
@@ -11,22 +11,21 @@ class BackTest:
         self.model = model()
         self.location = location
         self.model.model_base_path = os.path.join(location, self.model.model_name)
-        self.portfolio_columns = ['Date', 'Cash', 'Allocated PNL', 'Allocated % PNL', 'Allocated', 'Total PNL', 'Total % PNL', 'Total']
         self.records_columns = ['Order no', 'Equity Name', 'Trade', 'Entry Time', 'Entry Price', 'Exit Time', 'Exit Price', 'Exit Type', 'Quantity', 'Position Size', 'PNL', '% PNL', 'Holding Period']
-        self.trading_records = pd.DataFrame(columns=self.records_columns)
-        self.portfolio_records = pd.DataFrame(columns=self.portfolio_columns)
         self.tradelog = pd.DataFrame(columns=self.records_columns)
         self.hedgelog = pd.DataFrame(columns=self.records_columns)
+        self.trading_records = pd.DataFrame(columns=self.records_columns)
 
     def prepare_run(self):
         os.makedirs(f'{self.location}/', exist_ok=True)
         if os.path.exists(self.model.model_base_path):
-            for folder in ['data', 'analysis', 'summary']:
+            for folder in ['data', 'summary']:
                 folder_path = os.path.join(self.model.model_base_path, folder)
                 for file in os.listdir(folder_path):
                     os.remove(os.path.join(folder_path, file))
         else:
-            for folder in ['data', 'analysis', 'summary']:
+            os.makedirs(self.model.model_base_path)
+            for folder in ['data', 'summary']:
                 folder_path = os.path.join(self.model.model_base_path, folder)
                 os.makedirs(folder_path, exist_ok=True)
 
@@ -140,7 +139,7 @@ class BackTest:
                     self.hedgelog.loc[i, 'PNL'] = 1 * (self.hedgelog[i]['Exit Price'] - self.hedgelog[i]['Entry Price']) * self.hedgelog[i]['Quantity'] - charge
                     self.hedgelog.loc[i, 'PNL'] = self.hedgelog.loc[i, 'PNL'].astype(float).round(3)
                 self.hedgelog.loc[i, '% PNL'] = self.hedgelog['PNL'] / self.hedgelog['Position Size'] * 100
-                self.hedgelog.loc[:, '% PNL'] = self.hedgelog.loc[i, '% PNL'].astype(float).round(2)
+                self.hedgelog.loc[i, '% PNL'] = self.hedgelog.loc[i, '% PNL'].astype(float).round(2)
 
         # Add triggered tradelog into trading_records
         self.trading_records = pd.concat([self.trading_records, sl], ignore_index=True)
@@ -152,12 +151,26 @@ class BackTest:
         self.portfolio_log['Date'] = date
         multi = self.tradelog['Trade'].map(lambda x: -1 if x == 'Short' else 1)
         self.portfolio_log['Allocated PNL'] = round(((self.tradelog['Exit Price'] - self.tradelog['Entry Price']) * multi * self.tradelog['Quantity']).sum(), 3)
-        self.portfolio_log['Cash'] = round(self.model.portfolio_management.free_capital, 3)
         self.portfolio_log['Allocated'] = round(self.tradelog['Position Size'].sum(), 3)
         self.portfolio_log['Allocated % PNL'] = round(self.portfolio_log['Allocated PNL'] / self.portfolio_log['Allocated'] * 100, 3) if self.portfolio_log['Allocated'] != 0.0 else 0.0
+        self.portfolio_log['Cash'] = round(self.model.portfolio_management.free_capital, 3)
         self.portfolio_log['Total'] = round(self.portfolio_log['Cash'] + self.portfolio_log['Allocated'] + self.portfolio_log['Allocated PNL'], 3)
         self.portfolio_log['Total PNL'] = round(self.portfolio_log['Total'] - self.model.portfolio_management.starting_capital, 3)
         self.portfolio_log['Total % PNL'] = round(self.portfolio_log['Total PNL'] / self.model.portfolio_management.starting_capital * 100.0, 3)
+
+        if self.model.hedging_system != None:
+            opening_hedges = self.hedgelog['Exit Type'] == 0.0
+            closed_hedges = self.hedgelog['Exit Type'] != 0.0
+            remain_cash_for_hedges = self.model.portfolio_management.starting_capital - self.hedgelog[opening_hedges]['Position Size'].sum()
+            self.portfolio_log['Cash'] = round(self.model.portfolio_management.free_capital + self.hedgelog[closed_hedges]['PNL'].sum() + remain_cash_for_hedges, 3)
+            self.portfolio_log['Hedges'] = round(self.hedgelog[opening_hedges]['Position Size'].sum(), 3)
+            close_price = self.model.hedging_system.get_hedges_data(date)['Close'].astype(float).values[0]
+            mult = self.hedgelog[opening_hedges]['Trade'].map(lambda x: 1 if x == 'Long' else -1)
+            self.portfolio_log['Hedges PNL'] = round(((close_price - self.hedgelog[opening_hedges]['Entry Price']) * self.hedgelog[opening_hedges]['Quantity'] * mult).sum(), 3)
+            self.portfolio_log['Hedges % PNL'] = round(self.portfolio_log['Hedges PNL'] / self.portfolio_log['Hedges'] * 100, 2) if self.portfolio_log['Hedges'] != 0.0 else 0.0
+            self.portfolio_log['Total'] = round(self.portfolio_log['Cash'] + self.portfolio_log['Allocated'] + self.portfolio_log['Allocated PNL'] + self.portfolio_log['Hedges'] + self.portfolio_log['Hedges PNL'], 3)
+            self.portfolio_log['Total PNL'] = round(self.portfolio_log['Total'] - self.model.portfolio_management.starting_capital * 2, 3)
+            self.portfolio_log['Total % PNL'] = round(self.portfolio_log['Total PNL'] / self.model.portfolio_management.starting_capital / 2 * 100.0, 3)
 
     def stats(self):
         df = self.trading_records
@@ -188,33 +201,102 @@ class BackTest:
             ('Average PNL per Trade', avg_pnl_per_trade),
             ('Risk Reward', risk_reward)
         ]
+
+        if self.model.hedging_system != None:
+            df_hedges = self.hedgelog
+            hedges_pnl = round(df_hedges['PNL'].sum(), 2)
+            hedges_winners = (df_hedges['PNL'] > 0).sum()
+            hedges_losers = (df_hedges['PNL'] <= 0).sum()
+            hedges_win_ratio = round(hedges_winners/total_trade * 100, 2) if total_trade else 0
+            hedges_total_profit = round(df_hedges[df_hedges['PNL'] > 0]['PNL'].sum(), 2)
+            hedges_total_loss = round(df_hedges[df_hedges['PNL'] <= 0]['PNL'].sum(), 2)
+            avg_hedges_profit_per_trade = round(hedges_total_profit/hedges_winners, 2) if hedges_winners else 0
+            avg_hedges_loss_per_trade = round(hedges_total_loss/hedges_losers, 2) if hedges_losers else 0
+            avg_hedges_pnl_per_trade = round(hedges_pnl/total_trade, 2) if total_trade else 0
+            hedges_risk_reward = f"1:{round(abs(avg_hedges_profit_per_trade/avg_hedges_loss_per_trade), 2)}" if avg_hedges_loss_per_trade else "N/A"
+
+            data += [
+                SEPARATING_LINE,
+                ('Hedges PNL', hedges_pnl),
+                ('Hedges Winners', hedges_winners),
+                ('Hedges Losers', hedges_losers),
+                ('% Hedges Win Ratio', hedges_win_ratio),
+                ('Hedges Total Profit', hedges_total_profit),
+                ('Hedges Total Loss', hedges_total_loss),
+                ('Average Hedges Profit per Trade', avg_hedges_profit_per_trade),
+                ('Average Hedges Loss per Trade', avg_hedges_loss_per_trade),
+                ('Average Hedges PNL per Trade', avg_hedges_pnl_per_trade),
+                ('Hedges Risk Reward', hedges_risk_reward)
+            ]
+
+            df_combined = self.combined_records
+            combined_pnl = round(df_combined['PNL'].sum(), 2)
+            combined_winners = (df_combined['PNL'] > 0).sum()
+            combined_losers = (df_combined['PNL'] <= 0).sum()
+            combined_win_ratio = round(combined_winners/total_trade * 100, 2) if total_trade else 0
+            combined_total_profit = round(df_combined[df_combined['PNL'] > 0]['PNL'].sum(), 2)
+            combined_total_loss = round(df_combined[df_combined['PNL'] <= 0]['PNL'].sum(), 2)
+            avg_combined_profit_per_trade = round(combined_total_profit/combined_winners, 2) if combined_winners else 0
+            avg_combined_loss_per_trade = round(combined_total_loss/combined_losers, 2) if combined_losers else 0
+            avg_combined_pnl_per_trade = round(combined_pnl/total_trade, 2) if total_trade else 0
+            combined_risk_reward = f"1:{round(abs(avg_combined_profit_per_trade/avg_combined_loss_per_trade), 2)}" if avg_combined_loss_per_trade else "N/A"
+
+            data += [
+                SEPARATING_LINE,
+                ('Combined PNL', combined_pnl),
+                ('Combined Winners', combined_winners),
+                ('Combined Losers', combined_losers),
+                ('% Combined Win Ratio', combined_win_ratio),
+                ('Combined Total Profit', combined_total_profit),
+                ('Combined Total Loss', combined_total_loss),
+                ('Average Combined Profit per Trade', avg_combined_profit_per_trade),
+                ('Average Combined Loss per Trade', avg_combined_loss_per_trade),
+                ('Average Combined PNL per Trade', avg_combined_pnl_per_trade),
+                ('Combined Risk Reward', combined_risk_reward)
+            ]
+
+
         return tabulate(data, headers=['Parameters', 'Values'], tablefmt='psql')
 
     def give_analysis(self):
-        for interval in self.model.universe_management.intervals:
-            for equity in self.model.equities:
-                df = self.trading_records[self.trading_records['Equity Name'] == equity]
-                if not df.empty:
-                    df = df.sort_values(by='Entry Time')
-                    path = os.path.join(self.model.model_base_path, f"analysis/{equity}-{interval}.csv")
-                    df.to_csv(path, index=None)
+        # for interval in self.model.universe_management.intervals:
+        #     for equity in self.model.equities:
+        #         df = self.trading_records[self.trading_records['Equity Name'] == equity]
+        #         if not df.empty:
+        #             df = df.sort_values(by='Entry Time')
+        #             path = os.path.join(self.model.model_base_path, f"analysis/{equity}-{interval}.csv")
+        #             df.to_csv(path, index=None)
 
-        self.trading_records.sort_values(by='Entry Time').to_csv(f"{self.model.model_base_path}/summary/trading-records.csv")
-
+        self.trading_records.sort_values(by='Entry Time').to_csv(f"{self.model.model_base_path}/summary/trading-records.csv", index=None)
         self.portfolio_records.sort_values(by='Date', inplace=True)
         self.portfolio_records.to_csv(f"{self.model.model_base_path}/summary/portfolio.csv", index=None)
 
-        self.hedgelog.to_csv(f"{self.model.model_base_path}/summary/hedge-records.csv", index=None)
-
-        with open(f"{self.model.model_base_path}/summary/table.txt", 'w') as f:
-            f.write(self.stats())
+        if self.model.hedging_system != None:
+            df_combined = self.trading_records.set_index('Order no')
+            self.hedgelog.to_csv(f"{self.model.model_base_path}/summary/hedge-records.csv", index=None)
+            combined_records = pd.DataFrame(columns=['Entry Time', 'Exit Time', 'Exit Type', 'Position Size', 'PNL', '% PNL', 'Holding Period'], index=self.trading_records['Order no'])
+            combined_records['Exit Type'] = df_combined['Exit Type']
+            combined_records['Entry Time'] = df_combined['Entry Time']
+            combined_records['Exit Time'] = df_combined['Exit Time']
+            combined_records['Holding Period'] = df_combined['Holding Period']
+            combined_records['Position Size'] = df_combined['Position Size'] * 2
+            combined_records['PNL'] = pd.concat([self.trading_records, self.hedgelog]).groupby('Order no')[['PNL']].sum()
+            combined_records['% PNL'] = combined_records['PNL'] / combined_records['Position Size']
+            self.combined_records = combined_records
+            combined_records.to_csv(f"{self.model.model_base_path}/summary/combined-records.csv")
 
     def run(self):
         self.prepare_run()
         df = self.model.run()
-        df.to_csv(f"{self.model.model_base_path}/summary/execution.csv", index=None)
-
         self.load_dates()
+
+        if self.model.hedging_system != None:
+            self.model.hedging_system.load_hedges_data()
+            self.portfolio_columns = ['Date', 'Cash', 'Allocated PNL', 'Allocated % PNL', 'Allocated', 'Hedges PNL', 'Hedges % PNL', 'Hedges', 'Total PNL', 'Total % PNL', 'Total']
+        else:
+            self.portfolio_columns = ['Date', 'Cash', 'Allocated PNL', 'Allocated % PNL', 'Allocated', 'Total PNL', 'Total % PNL', 'Total']
+        self.portfolio_records = pd.DataFrame(columns=self.portfolio_columns)
+
         for interval, dates in self.dates.items():
             for date in dates:
                 df_in_date = df[df['Date'] == date]
@@ -239,3 +321,5 @@ class BackTest:
                 self.portfolio_records = pd.concat([self.portfolio_records, pd.DataFrame([self.portfolio_log])], ignore_index=True)
 
         self.give_analysis()
+        with open(f"{self.model.model_base_path}/summary/table.txt", 'w') as f:
+            print(self.stats(), file=f)
