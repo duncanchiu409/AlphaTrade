@@ -1,4 +1,5 @@
 from ..lib.riskManagement import BaseRiskManagement
+import pandas as pd
 
 class StopLoss(BaseRiskManagement):
 	def __init__(self, loss_percent):
