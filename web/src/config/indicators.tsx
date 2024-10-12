@@ -40,5 +40,8 @@ export const MainIndicators: TechnicalIndicator[] = [
 ]
 
 export const SubIndicators: TechnicalIndicator[] = [
-
+  Indicators.VOL,
+  Indicators.MACD,
+  Indicators.KDJ,
+  Indicators.RSI,
 ]

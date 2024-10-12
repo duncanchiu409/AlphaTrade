@@ -13,25 +13,20 @@ interface csvFormat {
 }
 
 function useFakeData() {
-  const [fakeData, setFakeData] = useState<KLineData[]>([])
+  const equities = file as csvFormat[]
+  const klinedata: KLineData[] = equities.map(i => {
+    const timestamp = new Date(i.Date).getTime()
+    return {
+      timestamp: timestamp,
+      open: parseFloat(i.Open.toFixed(2)),
+      high: parseFloat(i.High.toFixed(2)),
+      low: parseFloat(i.Low.toFixed(2)),
+      close: parseFloat(i.Close.toFixed(2)),
+      volume: i.Volume
+    }
+  })
 
-  useEffect(() => {
-    const equities = file as csvFormat[]
-    const klinedata: KLineData[] = equities.map(i => {
-      const timestamp = new Date(i.Date).getTime()
-      return {
-        timestamp: timestamp,
-        open: parseFloat(i.Open.toFixed(2)),
-        high: parseFloat(i.High.toFixed(2)),
-        low: parseFloat(i.Low.toFixed(2)),
-        close: parseFloat(i.Close.toFixed(2)),
-        volume: i.Volume
-      }
-    })
-    setFakeData(klinedata)
-  }, [])
-
-  return fakeData
+  return klinedata
 }
 
 export default useFakeData
