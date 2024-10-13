@@ -9,7 +9,7 @@ import { TradesTable } from '../components/tables/trades'
 import { TechnicalIndicator, MainIndicators, SubIndicators } from '../config/indicators'
 import { EquitiesTable } from '../components/tables/equities'
 import { AiFillSliders, AiOutlineAreaChart, AiOutlinePercentage, AiOutlineFieldNumber, AiTwotoneSetting } from "react-icons/ai";
-import { Header } from '../ui/header'
+import { Header } from '../components/ui/header'
 
 interface IndicatorsListProps {
   title: string;
@@ -79,7 +79,6 @@ flex: 5;
 `
 
 const Wrapper2 = styled.div`
-margin-top: 1em;
 flex: 2;
 display: flex;
 flex-direction: column;
@@ -90,7 +89,7 @@ flex: 1;
 `
 
 const Wrapper4 = styled.div`
-flex: 1;
+flex: 3;
 `
 
 export default function Chart(): React.ReactElement {
@@ -98,13 +97,13 @@ export default function Chart(): React.ReactElement {
   const [ showModal, setShowModal ] = useState<boolean>(false)
 
   const typeIcon: Record<string, React.ReactNode> = {
-    [CandleType.Area]: (
+    [CandleType.CandleSolid]: (
       <AiOutlineAreaChart
         size={25}
         onClick={() => setType(CandleType.Area)}
       />
     ),
-    [CandleType.CandleSolid]: (
+    [CandleType.Area]: (
       <AiFillSliders
         size={25}
         onClick={() => setType(CandleType.CandleSolid)}
@@ -113,13 +112,13 @@ export default function Chart(): React.ReactElement {
   };
 
   const axisIcon: Record<string, React.ReactNode> = {
-    [YAxisType.Normal]: (
+    [YAxisType.Percentage]: (
       <AiOutlineFieldNumber
         size={25}
         onClick={() => setAxis(YAxisType.Normal)}
       />
     ),
-    [YAxisType.Percentage]: (
+    [YAxisType.Normal]: (
       <AiOutlinePercentage
         size={25}
         onClick={() => setAxis(YAxisType.Percentage)}
@@ -140,22 +139,24 @@ export default function Chart(): React.ReactElement {
   };
 
   const extra: React.ReactNode[] = React.Children.toArray([
-    <Button variant='link' onClick={openModal} icon={<AiTwotoneSetting size={25}/>}/>,
     <Button variant='link' icon={typeIcon[type]}/>,
     <Button variant='link' icon={axisIcon[axis]}/>,
+    <Button variant='link' onClick={openModal} icon={<AiTwotoneSetting size={25}/>}/>,
   ])
 
   return (
-    <Layout.Content style={{ display: 'flex', gap: '0.75em', marginLeft: '1em', marginRight: '1em', flexDirection: 'row' }}>
+    <Layout.Content className='layout-content'>
       <Wrapper1>
         <Header title='Charts' subtitle='Chart for Backtest' extra={extra}/>
         <KlineChart type={type} axis={axis} mainIndicators={primary} subIndicators={secondary} />
       </Wrapper1>
       <Wrapper2>
         <Wrapper3>
+          <Header title='Equity Name' subtitle='Equities traded in this Backtest'/>
           <EquitiesTable />
         </Wrapper3>
         <Wrapper4>
+          <Header title='Trades' subtitle='Trades executed in this Equity'/>
           <TradesTable />
         </Wrapper4>
       </Wrapper2>

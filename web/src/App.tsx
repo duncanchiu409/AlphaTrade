@@ -3,8 +3,10 @@ import { Link, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { Layout, Menu } from 'antd'
 import { DefaultKey, MenuItem, Paths } from './config/routes'
-import { AiFillSliders, AiOutlinePieChart, AiFillTool } from "react-icons/ai";
+import { AiFillSliders, AiOutlinePieChart, AiFillTool, AiOutlineFileDone } from "react-icons/ai";
 import Chart from './pages/chart'
+import Portfolio from './pages/portfolio'
+import Trades from './pages/trades'
 import { purpleDark } from '@ant-design/colors';
 
 function App(): React.ReactElement {
@@ -18,8 +20,8 @@ function App(): React.ReactElement {
           <Menu.Item key={MenuItem.CHART} icon={<AiFillSliders />}>
             <Link to={Paths.HOME}>Chart</Link>
           </Menu.Item>
-          <Menu.Item key={MenuItem.DATAFRAME} icon={<AiFillSliders />}>
-            <Link to={Paths.DATAFRAME}>DataFrame</Link>
+          <Menu.Item key={MenuItem.TRADES} icon={<AiOutlineFileDone />}>
+            <Link to={Paths.TRADES}>Trades</Link>
           </Menu.Item>
           <Menu.Item key={MenuItem.PORTFOLIO} icon={<AiOutlinePieChart />}>
             <Link to={Paths.PORTFOLIO}>Portfolio</Link>
@@ -32,9 +34,9 @@ function App(): React.ReactElement {
       <Layout className='layout'>
         <Routes>
           <Route path={Paths.HOME} element={<Chart/>} />
-          {/* <Route path={Paths.DATAFRAME} element={} />
+          <Route path={Paths.TRADES} element={<Trades/>} />
           <Route path={Paths.PORTFOLIO} element={<Portfolio />} />
-          <Route path={Paths.CONFIG} element={<Config />} /> */}
+          {/* <Route path={Paths.CONFIG} element={<Config />} /> */}
         </Routes>
       </Layout>
     </Layout>

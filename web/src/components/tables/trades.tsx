@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Table, Layout } from 'antd'
-import { Div } from '../../ui/animated'
+import { Div } from '../ui/animated'
 
 export function TradesTable() {
   const columns = [
     {
-      title: 'Trade Type',
+      title: 'Trade',
       dataIndex: 'Trade',
       key: 'tradeType',
     },

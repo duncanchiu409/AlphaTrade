@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import difference from 'lodash/difference'
 import { TechnicalIndicator, MainIndicators, SubIndicators } from '../../config/indicators'
 import { Chart, init, dispose, YAxisType, CandleStyle, CandleType, KLineData, registerIndicator } from 'klinecharts'
-import { Div } from '../../ui/animated'
+import { Div } from '../ui/animated'
 import useFakeData from '../../utils/usefakeData'
 import '../../App.css'
 
@@ -64,7 +64,7 @@ export function KlineChart(props: KlineChartProps): React.ReactElement {
 
   useEffect(() => {
     const tmp_chart = init(CHART_ID, options)
-    tmp_chart?.setStyles('dark')
+    tmp_chart?.setStyles('light')
     tmp_chart?.applyNewData(fakeData)
 
     setChart(tmp_chart)
