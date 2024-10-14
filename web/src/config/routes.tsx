@@ -3,6 +3,7 @@ export enum Paths {
   TRADES = '/trades',
   PORTFOLIO = '/portfolio',
   CONFIG = '/config',
+  PORTFOLIOLOG = '/portfoliolog'
 }
 
 export enum MenuItem {
@@ -10,6 +11,7 @@ export enum MenuItem {
   TRADES = 'trades',
   PORTFOLIO = 'portfolio',
   CONFIG = 'config',
+  PORTFOLIOLOG = 'portfoliolog'
 }
 
 export const DefaultKey: Record<Paths, MenuItem> = {
@@ -17,4 +19,5 @@ export const DefaultKey: Record<Paths, MenuItem> = {
   [Paths.TRADES]: MenuItem.TRADES,
   [Paths.PORTFOLIO]: MenuItem.PORTFOLIO,
   [Paths.CONFIG]: MenuItem.CONFIG,
+  [Paths.PORTFOLIOLOG]: MenuItem.PORTFOLIOLOG
 };

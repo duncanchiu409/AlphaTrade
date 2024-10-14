@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { Layout, Menu } from 'antd'
@@ -7,21 +7,30 @@ import { AiFillSliders, AiOutlinePieChart, AiFillTool, AiOutlineFileDone } from 
 import Chart from './pages/chart'
 import Portfolio from './pages/portfolio'
 import Trades from './pages/trades'
-import { purpleDark } from '@ant-design/colors';
+import PortfolioLog from './pages/portfolioLog'
+import { usePortfolioStore } from './store/usePortfolioStore'
 
 function App(): React.ReactElement {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const portfolioStore = usePortfolioStore()
   const { pathname } = window.location
+
+  useEffect(() => {
+    portfolioStore.resetPortfolio()
+  }, [])
 
   return (
     <Layout>
       <Layout.Sider className='layout' theme={theme} collapsed={true} >
-        <Menu theme={theme} mode='inline' defaultSelectedKeys={[DefaultKey[pathname as Paths]]} style={{marginTop: '0.2em'}}>
+        <Menu theme={theme} mode='inline' defaultSelectedKeys={[DefaultKey[pathname as Paths]]} style={{ marginTop: '0.2em' }}>
           <Menu.Item key={MenuItem.CHART} icon={<AiFillSliders />}>
             <Link to={Paths.HOME}>Chart</Link>
           </Menu.Item>
           <Menu.Item key={MenuItem.TRADES} icon={<AiOutlineFileDone />}>
             <Link to={Paths.TRADES}>Trades</Link>
+          </Menu.Item>
+          <Menu.Item key={MenuItem.PORTFOLIOLOG} icon={<AiOutlineFileDone />}>
+            <Link to={Paths.PORTFOLIOLOG}>Portfolio Logs</Link>
           </Menu.Item>
           <Menu.Item key={MenuItem.PORTFOLIO} icon={<AiOutlinePieChart />}>
             <Link to={Paths.PORTFOLIO}>Portfolio</Link>
@@ -32,12 +41,13 @@ function App(): React.ReactElement {
         </Menu>
       </Layout.Sider>
       <Layout className='layout'>
-        <Routes>
-          <Route path={Paths.HOME} element={<Chart/>} />
-          <Route path={Paths.TRADES} element={<Trades/>} />
-          <Route path={Paths.PORTFOLIO} element={<Portfolio />} />
-          {/* <Route path={Paths.CONFIG} element={<Config />} /> */}
-        </Routes>
+          <Routes>
+            <Route path={Paths.HOME} element={<Chart />} />
+            <Route path={Paths.TRADES} element={<Trades />} />
+            <Route path={Paths.PORTFOLIOLOG} element={<PortfolioLog />} />
+            <Route path={Paths.PORTFOLIO} element={<Portfolio />} />
+            {/* <Route path={Paths.CONFIG} element={<Config />} /> */}
+          </Routes>
       </Layout>
     </Layout>
   );

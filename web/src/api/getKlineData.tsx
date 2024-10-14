@@ -1,6 +1,5 @@
 import { KLineData } from 'klinecharts'
-import { useState, useEffect } from "react";
-import file from './test.json'
+import file from './kline.json'
 
 interface csvFormat {
   Date: string,
@@ -12,7 +11,7 @@ interface csvFormat {
   Volume: number
 }
 
-function useFakeData() {
+export function getFakeData() {
   const equities = file as csvFormat[]
   const klinedata: KLineData[] = equities.map(i => {
     const timestamp = new Date(i.Date).getTime()
@@ -25,8 +24,5 @@ function useFakeData() {
       volume: i.Volume
     }
   })
-
   return klinedata
 }
-
-export default useFakeData

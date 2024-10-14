@@ -16,7 +16,7 @@ interface csvFormat {
   'Holding Period': string;
 }
 
-export interface tradesFormat {
+export interface TradesFormat {
   key: string;
   'Order no': string;
   'Equity Name': string;
@@ -33,21 +33,19 @@ export interface tradesFormat {
   'Holding Period': string;
 }
 
-function useFakeTradingRecords(): tradesFormat[] {
+export function loadTradingRecords(): TradesFormat[] {
   const records = tradingRecords as csvFormat[]
 
   function days_between(date1: Date, date2: Date) {
     // The number of milliseconds in one day
     const ONE_DAY = 1000 * 60 * 60 * 24;
-
     // Calculate the difference in milliseconds
     const differenceMs: number = Math.abs(date1.getTime() - date2.getTime());
-
     // Convert back to days and return
     return Math.round(differenceMs / ONE_DAY);
   }
 
-  const fakeData: tradesFormat[] = records.map((record: csvFormat) => {
+  const fakeData: TradesFormat[] = records.map((record: csvFormat) => {
     const holdingPeriod: number = days_between(new Date(record['Exit Time']), new Date(record['Entry Time']))
 
     return {
@@ -70,5 +68,3 @@ function useFakeTradingRecords(): tradesFormat[] {
 
   return fakeData
 }
-
-export default useFakeTradingRecords

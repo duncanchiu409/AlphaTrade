@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import { KlineChart, KlineChartProps } from '../components/charts/kline'
 import { KLineData, CandleType, YAxisType } from 'klinecharts'
 import { useIndicatorsStore } from '../store/useIndicatorsStore'
-import { Layout, Row, Col, Flex, Button, Modal, Typography, Checkbox } from 'antd'
-import { purpleDark } from '@ant-design/colors';
+import { Layout, Row, Col, Flex, Button, Modal, Typography, Checkbox, Spin } from 'antd'
 import { TradesTable } from '../components/tables/trades'
 import { TechnicalIndicator, MainIndicators, SubIndicators } from '../config/indicators'
 import { EquitiesTable } from '../components/tables/equities'
 import { AiFillSliders, AiOutlineAreaChart, AiOutlinePercentage, AiOutlineFieldNumber, AiTwotoneSetting } from "react-icons/ai";
 import { Header } from '../components/ui/header'
+import { useKLineStore } from '../store/useKLineStore'
 
 interface IndicatorsListProps {
   title: string;
@@ -60,7 +60,7 @@ function IndicatorsList(props: IndicatorsListProps): React.ReactElement {
   if (!all.length) {
     content = (
       <div>
-        <span>Not found</span>
+        <h5>Not found</h5>
       </div>
     );
   }
@@ -95,6 +95,11 @@ flex: 3;
 export default function Chart(): React.ReactElement {
   const { type, axis, primary, secondary, setPrimary, setSecondary, setType, setAxis } = useIndicatorsStore()
   const [ showModal, setShowModal ] = useState<boolean>(false)
+  const { klineData, loading, resetKlineData } = useKLineStore()
+
+  useEffect(() => {
+    resetKlineData()
+  }, [])
 
   const typeIcon: Record<string, React.ReactNode> = {
     [CandleType.CandleSolid]: (
@@ -148,7 +153,9 @@ export default function Chart(): React.ReactElement {
     <Layout.Content className='layout-content'>
       <Wrapper1>
         <Header title='Charts' subtitle='Chart for Backtest' extra={extra}/>
-        <KlineChart type={type} axis={axis} mainIndicators={primary} subIndicators={secondary} />
+        <Spin tip='Loading' spinning={loading} >
+          <KlineChart klineData={klineData} type={type} axis={axis} mainIndicators={primary} subIndicators={secondary} />
+        </Spin>
       </Wrapper1>
       <Wrapper2>
         <Wrapper3>

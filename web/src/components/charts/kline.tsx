@@ -3,12 +3,12 @@ import difference from 'lodash/difference'
 import { TechnicalIndicator, MainIndicators, SubIndicators } from '../../config/indicators'
 import { Chart, init, dispose, YAxisType, CandleStyle, CandleType, KLineData, registerIndicator } from 'klinecharts'
 import { Div } from '../ui/animated'
-import useFakeData from '../../utils/usefakeData'
 import '../../App.css'
 
 const CHART_ID = 'kline-chart'
 
 export interface KlineChartProps {
+  klineData: KLineData[];
   type: CandleType;
   axis: YAxisType;
   mainIndicators: TechnicalIndicator[];
@@ -58,20 +58,19 @@ const options = {
 // })
 
 export function KlineChart(props: KlineChartProps): React.ReactElement {
-  const { type, axis, mainIndicators, subIndicators } = props
+  const { klineData, type, axis, mainIndicators, subIndicators } = props
   const [chart, setChart] = useState<Chart | null>(null)
-  const fakeData = useFakeData()
 
   useEffect(() => {
-    const tmp_chart = init(CHART_ID, options)
-    tmp_chart?.setStyles('light')
-    tmp_chart?.applyNewData(fakeData)
+    const chart = init(CHART_ID, options)
+    chart?.setStyles('light')
+    chart?.applyNewData(klineData)
 
-    setChart(tmp_chart)
+    setChart(chart)
     return () => {
       dispose(CHART_ID)
     }
-  }, [])
+  }, [klineData])
 
   useEffect(() => {
     chart?.setStyles({
@@ -105,11 +104,11 @@ export function KlineChart(props: KlineChartProps): React.ReactElement {
     const diffSub = difference(SubIndicators, subIndicators)
 
     diffSub.forEach((value) => {
-      chart?.removeIndicator('Sub-CandlePane', value.name)
+      chart?.removeIndicator(`Sub-CandlePane${value.name}`, value.name)
     })
 
     subIndicators.forEach((value) => {
-      chart?.createIndicator(value.name, false, {id: 'Sub-CandlePane'})
+      chart?.createIndicator(value.name, false, {id: `Sub-CandlePane${value.name}`})
     })
   }, [chart, mainIndicators, subIndicators])
 

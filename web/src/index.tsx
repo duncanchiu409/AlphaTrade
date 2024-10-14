@@ -13,9 +13,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={ client }>
+    <QueryClientProvider client={client}>
       <BrowserRouter>
-        <App/>
+        <App />
       </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>

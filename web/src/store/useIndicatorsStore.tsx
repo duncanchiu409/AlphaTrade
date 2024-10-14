@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { CandleType, YAxisType } from 'klinecharts'
-import { MainIndicators, SubIndicators ,TechnicalIndicator } from '../config/indicators'
+import { TechnicalIndicator } from '../config/indicators'
 
-type IndicatorsStore = {
+interface IndicatorsStore {
   type: CandleType;
   axis: YAxisType;
   primary: TechnicalIndicator[];
