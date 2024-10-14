@@ -31,7 +31,7 @@ function Portfolio(): React.ReactElement {
     // {
     //   id: LineChartID.CASH,
     //   color: LineChartConfig[LineChartID.CASH],
-    //   data: fakeData.filter((_, i) => i % 55 == 0).map(value => {
+    //   data: fakeData.filter((_, i) => i % 15 == 0).map(value => {
     //     return {
     //       x: value['Date'],
     //       y: value[LineChartID.CASH]
@@ -41,7 +41,7 @@ function Portfolio(): React.ReactElement {
     // {
     //   id: LineChartID.ALLOCATED,
     //   color: LineChartConfig[LineChartID.ALLOCATED],
-    //   data: fakeData.filter((_, i) => i % 55 == 0).map(value => {
+    //   data: fakeData.filter((_, i) => i % 15 == 0).map(value => {
     //     return {
     //       x: value['Date'],
     //       y: value[LineChartID.ALLOCATED]
@@ -51,7 +51,7 @@ function Portfolio(): React.ReactElement {
     {
       id: LineChartID.TOTAL,
       color: LineChartConfig[LineChartID.TOTAL],
-      data: fakeData.filter((_, i) => i % 20 == 0).map(value => {
+      data: fakeData.filter((_, i) => i % 15 == 0).map(value => {
         return {
           x: value['Date'],
           y: value[LineChartID.TOTAL]
@@ -64,13 +64,12 @@ function Portfolio(): React.ReactElement {
     <Layout.Content className='layout-content'>
       <Wrapper1>
         <Header title='Portfolio' subtitle='Line Chart for Portfolio' />
-
-          <LineChart data={chartData} />
+        <LineChart data={chartData} />
       </Wrapper1>
       <Wrapper2>
-        <Header title='Strategy Stats' subtitle='Table for Strategy'/>
+        <Header title='Strategy Stats' subtitle='Table for Strategy' />
         <Spin tip='Loading' size='large' spinning={false} >
-          <StatsTable/>
+          <StatsTable />
         </Spin>
       </Wrapper2>
     </Layout.Content>

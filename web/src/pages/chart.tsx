@@ -10,6 +10,7 @@ import { EquitiesTable } from '../components/tables/equities'
 import { AiFillSliders, AiOutlineAreaChart, AiOutlinePercentage, AiOutlineFieldNumber, AiTwotoneSetting } from "react-icons/ai";
 import { Header } from '../components/ui/header'
 import { useKLineStore } from '../store/useKLineStore'
+import { useTradeRecordsStore } from '../store/useTradeRecordsStore'
 
 interface IndicatorsListProps {
   title: string;
@@ -30,11 +31,11 @@ function IndicatorsList(props: IndicatorsListProps): React.ReactElement {
     let checked = indicators.includes(indicator)
 
     function onClick() {
-      if(!indicators.includes(indicator)){
+      if (!indicators.includes(indicator)) {
         let updated_indicators = [...indicators, indicator]
         onUpdate(updated_indicators)
       }
-      else{
+      else {
         let updated_indicators = indicators.filter(i => i.name !== indicator.name)
         onUpdate(updated_indicators)
       }
@@ -42,11 +43,11 @@ function IndicatorsList(props: IndicatorsListProps): React.ReactElement {
 
     return (
       <div onClick={onClick} style={{}}>
-        <div style={{display: 'flex', flexDirection: 'row', gap: '0.75em'}}>
-          <Checkbox checked={checked} style={{margin: '0px'}} />
-          <h5 style={{margin: '0px', alignSelf: 'center'}} >{indicator.name}</h5>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '0.75em' }}>
+          <Checkbox checked={checked} style={{ margin: '0px' }} />
+          <h5 style={{ margin: '0px', alignSelf: 'center' }} >{indicator.name}</h5>
         </div>
-        <span style={{margin: '0px'}}>{indicator.description}</span>
+        <span style={{ margin: '0px' }}>{indicator.description}</span>
       </div>
     )
   }
@@ -60,15 +61,15 @@ function IndicatorsList(props: IndicatorsListProps): React.ReactElement {
   if (!all.length) {
     content = (
       <div>
-        <h5>Not found</h5>
+        <h5 style={{margin: '0px', alignSelf: 'center'}}>Not found</h5>
       </div>
     );
   }
 
   return (
-    <div style={{flex: 1, marginLeft: '1em'}}>
-      <h3 style={{margin: '0', }}>{title}</h3>
-      { content }
+    <div style={{ flex: 1, marginLeft: '1em' }}>
+      <h3 style={{ margin: '0', }}>{title}</h3>
+      {content}
     </div>
   )
 }
@@ -79,26 +80,20 @@ flex: 5;
 `
 
 const Wrapper2 = styled.div`
-flex: 2;
+flex: 1;
 display: flex;
 flex-direction: column;
 `
 
-const Wrapper3 = styled.div`
-flex: 1;
-`
-
-const Wrapper4 = styled.div`
-flex: 3;
-`
-
 export default function Chart(): React.ReactElement {
   const { type, axis, primary, secondary, setPrimary, setSecondary, setType, setAxis } = useIndicatorsStore()
-  const [ showModal, setShowModal ] = useState<boolean>(false)
-  const { klineData, loading, resetKlineData } = useKLineStore()
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const { klineData, resetKlineData } = useKLineStore()
+  const { trades, loading, resetTradeRecords } = useTradeRecordsStore()
 
   useEffect(() => {
     resetKlineData()
+    resetTradeRecords()
   }, [])
 
   const typeIcon: Record<string, React.ReactNode> = {
@@ -144,34 +139,28 @@ export default function Chart(): React.ReactElement {
   };
 
   const extra: React.ReactNode[] = React.Children.toArray([
-    <Button variant='link' icon={typeIcon[type]}/>,
-    <Button variant='link' icon={axisIcon[axis]}/>,
-    <Button variant='link' onClick={openModal} icon={<AiTwotoneSetting size={25}/>}/>,
+    <Button variant='link' icon={typeIcon[type]} />,
+    <Button variant='link' icon={axisIcon[axis]} />,
+    <Button variant='link' onClick={openModal} icon={<AiTwotoneSetting size={25} />} />,
   ])
 
   return (
     <Layout.Content className='layout-content'>
       <Wrapper1>
-        <Header title='Charts' subtitle='Chart for Backtest' extra={extra}/>
-        <Spin tip='Loading' spinning={loading} >
-          <KlineChart klineData={klineData} type={type} axis={axis} mainIndicators={primary} subIndicators={secondary} />
-        </Spin>
+        <Header title='Charts' subtitle='Chart for Backtest' extra={extra} />
+        <KlineChart klineData={klineData} trades={trades} type={type} axis={axis} mainIndicators={primary} subIndicators={secondary} />
       </Wrapper1>
       <Wrapper2>
-        <Wrapper3>
-          <Header title='Equity Name' subtitle='Equities traded in this Backtest'/>
-          <EquitiesTable />
-        </Wrapper3>
-        <Wrapper4>
-          <Header title='Trades' subtitle='Trades executed in this Equity'/>
-          <TradesTable />
-        </Wrapper4>
+        <Header title='Equity Name' subtitle='Equities traded in this Backtest' />
+        <Spin tip='Loading' spinning={loading}>
+          <EquitiesTable trades={trades}/>
+        </Spin>
       </Wrapper2>
       <Modal open={showModal} onOk={handleOk} onCancel={handleCancel}>
-        <Header title='Indicators' subtitle='Select Indicators'/>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <IndicatorsList title='Primary Indicators' all={MainIndicators} indicators={primary} onUpdate={setPrimary}/>
-          <IndicatorsList title='Secondary Indicators' all={SubIndicators} indicators={secondary} onUpdate={setSecondary}/>
+        <Header title='Indicators' subtitle='Select Indicators' />
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <IndicatorsList title='Primary Indicators' all={MainIndicators} indicators={primary} onUpdate={setPrimary} />
+          <IndicatorsList title='Secondary Indicators' all={SubIndicators} indicators={secondary} onUpdate={setSecondary} />
         </div>
       </Modal>
     </Layout.Content>

@@ -43,7 +43,7 @@ export function LineChart(props: LineChartProps): React.ReactElement {
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'count',
+      legend: 'Amount',
       legendOffset: -40,
       legendPosition: 'middle',
       truncateTickAt: 0
