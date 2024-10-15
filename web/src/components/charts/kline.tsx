@@ -28,20 +28,6 @@ const options = {
   }
 };
 
-function processEES(kl: KLineData, trades: TradesFormat[]): string {
-  for(let i = 0; i < trades.length; i++){
-    if(trades[i]['Equity Name'] === 'AENT'){
-      if(trades[i]['Entry Time'] === new Date(kl['Date']).toDateString()){
-        return 'B'
-      }
-      else if(trades[i]['Exit Time'] === new Date(kl['Date']).toDateString()){
-        return 'S'
-      }
-    }
-  }
-  return ' '
-}
-
 export function KlineChart(props: KlineChartProps): React.ReactElement {
   const { klineData, trades, type, axis, mainIndicators, subIndicators } = props
   const [chart, setChart] = useState<Chart | null>(null)
