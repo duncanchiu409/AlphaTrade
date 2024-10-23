@@ -1,4 +1,4 @@
-import portfolio from './portfolio.json'
+import portfolio from '../data/portfolio.json'
 
 interface csvPortfolioFormat {
   'Date': string;

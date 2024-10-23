@@ -1,4 +1,4 @@
-import tradingRecords from './trading-records.json'
+import tradingRecords from '../data/trading-records.json'
 
 interface csvFormat {
   'Order no': string;
@@ -53,9 +53,9 @@ export function loadTradingRecords(): TradesFormat[] {
       'Order no': record['Order no'],
       'Equity Name': record['Equity Name'],
       'Trade': record['Trade'],
-      'Entry Time': new Date(record['Entry Time']).toDateString(),
+      'Entry Time': record['Entry Time'],
       'Entry Price': record['Entry Price'],
-      'Exit Time': new Date(record['Exit Time']).toDateString(),
+      'Exit Time': record['Exit Time'],
       'Exit Price': record['Exit Price'],
       'Exit Type': record['Exit Type'],
       'Quantity': record['Quantity'],

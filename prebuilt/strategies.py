@@ -87,17 +87,18 @@ class Double7Signal(BaseSignalGenerator):
 				df.loc[i, 'Position'] = 'Hold'
 
 	def generate_signals(self, equities, intervals):
-		tickers = pd.read_csv("assets/tickers.csv", parse_dates=['FirstTrade', 'Compl. Date'], index_col='Ticker')
+		# tickers = pd.read_csv("assets/tickers.csv", parse_dates=['FirstTrade', 'Compl. Date'], index_col='Ticker')
 		df = pd.DataFrame([])
-		for equity_name in equities:
-			stock_data = super().generate_signals(equity_name, '1d')
-			self.computeDouble7(stock_data)
-			first_date = tickers.loc[equity_name, 'FirstTrade'].date()
-			stock_data = stock_data[(stock_data['Date'].dt.date >= first_date)]
-			if stock_data[stock_data['Position'] == 'Entry'].shape[0] != 0 and stock_data[stock_data['Position'] == 'Exit'].shape[0] != 0:
-				first_entry = stock_data[stock_data['Position'] == 'Entry']['Date'].iloc[0]
-				last_exit = stock_data[stock_data['Position'] == 'Exit']['Date'].iloc[-1]
-				stock_data = stock_data[(stock_data['Date'] >= first_entry) & (stock_data['Date'] <= last_exit)]
+		for interval in intervals:
+			for equity_name in equities:
+				stock_data = super().generate_signals(equity_name, interval)
+				self.computeDouble7(stock_data)
+				# first_date = tickers.loc[equity_name, 'FirstTrade'].date()
+				# stock_data = stock_data[(stock_data['Date'].dt.date >= first_date)]
+				# if stock_data[stock_data['Position'] == 'Entry'].shape[0] != 0 and stock_data[stock_data['Position'] == 'Exit'].shape[0] != 0:
+				# 	first_entry = stock_data[stock_data['Position'] == 'Entry']['Date'].iloc[0]
+				# 	last_exit = stock_data[stock_data['Position'] == 'Exit']['Date'].iloc[-1]
+				# 	stock_data = stock_data[(stock_data['Date'] >= first_entry) & (stock_data['Date'] <= last_exit)]
 				stock_data['Equity Name'] = equity_name
 				stock_data['Trade'] = 'Long'
 				df = pd.concat([df, stock_data], ignore_index=True)

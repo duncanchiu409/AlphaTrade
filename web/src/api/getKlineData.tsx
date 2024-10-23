@@ -1,8 +1,8 @@
 import { KLineData } from 'klinecharts'
-import file from './kline.json'
+import file from '../data/kline.json'
 
 interface csvFormat {
-  Date: string,
+  Datetime: string,
   "Adj Close": number,
   Open: number,
   High: number,
@@ -14,7 +14,7 @@ interface csvFormat {
 export function getFakeData() {
   const equities = file as csvFormat[]
   const klinedata: KLineData[] = equities.map(i => {
-    const timestamp = new Date(i.Date).getTime()
+    const timestamp = new Date(i.Datetime).getTime()
     return {
       timestamp: timestamp,
       open: parseFloat(i.Open.toFixed(2)),

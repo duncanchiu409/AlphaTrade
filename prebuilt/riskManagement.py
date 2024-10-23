@@ -123,6 +123,7 @@ class TraillingStopLoss(BaseRiskManagement):
 		return check
 
 	def trigger(self, rows, data):
+		print(f"Triggered {data['Date']}")
 		for i, row in rows.iterrows():
 			if row['Trade'] == 'Long' and data['Low'] < self.stop_loss.get(row['Order no']):
 				exit_type = 'Stop Loss'

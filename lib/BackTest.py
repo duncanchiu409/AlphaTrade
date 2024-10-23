@@ -5,6 +5,7 @@ from yfinance import shared
 import os
 from tabulate import tabulate, SEPARATING_LINE
 import shortuuid
+from ..utils.dates import findDatetime
 
 class BackTest:
     def __init__(self, model, location='models'):
@@ -33,8 +34,10 @@ class BackTest:
         self.dates = {}
         for interval in self.model.universe_management.intervals:
             try:
-                df = pd.read_csv(f"{self.model.api_model_management.get_model_data_path()}/{self.model.date_system}-{interval}.csv", parse_dates=['Date'])
+                dateColumn = findDatetime(interval)
+                df = pd.read_csv(f"{self.model.api_model_management.get_model_data_path()}/{self.model.date_system}-{interval}.csv", parse_dates=[dateColumn])
                 if self.model.date_system not in shared._ERRORS:
+                    df['Date'] = df[dateColumn]
                     self.dates[interval] = df['Date']
                 else:
                     raise Exception('Error: loading dates')
@@ -274,7 +277,7 @@ class BackTest:
             ("Sortino Ratio", round((mean * N - rf) / downside_sigma / np.sqrt(N), 3))
         ]
 
-        return tabulate(data, headers=['Parameters', 'Values'], tablefmt='psql')
+        self.table = tabulate(data, headers=['Parameters', 'Values'], tablefmt='psql')
 
     def give_analysis(self):
         # for interval in self.model.universe_management.intervals:
@@ -340,4 +343,4 @@ class BackTest:
 
         self.give_analysis()
         with open(f"{self.model.model_base_path}/summary/table.txt", 'w') as f:
-            print(self.stats(), file=f)
+            print(self.table, file=f)

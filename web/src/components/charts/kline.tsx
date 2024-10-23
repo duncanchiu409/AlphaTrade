@@ -43,14 +43,14 @@ export function KlineChart(props: KlineChartProps): React.ReactElement {
         { key: 'location' }
       ],
       calc: (kLineDataList) => {
-        const filteredTrades = trades.filter(trade => trade['Equity Name'] === 'AENT')
-        const tradesEntryDates = filteredTrades.map(trade => trade['Entry Time'])
-        const tradesExitDates = filteredTrades.map(trade => trade['Exit Time'])
+        const filteredTrades = trades.filter(trade => trade['Equity Name'] === 'ETH-USD')
+        const tradesEntryDates = filteredTrades.map(trade => new Date(trade['Entry Time']).getTime())
+        const tradesExitDates = filteredTrades.map(trade => new Date(trade['Exit Time']).getTime())
 
         return kLineDataList.map(kLineData => {
-          let text = tradesEntryDates.includes(new Date(kLineData['timestamp']).toDateString()) ? '🟩' : ' '
-          text = tradesExitDates.includes(new Date(kLineData['timestamp']).toDateString()) ? '🟥' : text
-          return { location: kLineData.close * 1.5, text: text }
+          let text = tradesEntryDates.includes(kLineData['timestamp']) ? '🟩' : ' '
+          text = tradesExitDates.includes(kLineData['timestamp']) ? '🟥' : text
+          return { location: kLineData.close * 1.01, text: text }
         })
       },
       draw: ({
