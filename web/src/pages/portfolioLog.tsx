@@ -1,16 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Layout, Spin, Table, Typography, Tag } from 'antd'
 import { Div } from '../components/ui/animated'
 import { Header } from '../components/ui/header'
-import { usePortfolioStore } from '../store/usePortfolioStore'
+import { usePortfolioStore, PortfolioLogInterface } from '../store/usePortfolioStore'
+import { DropDown } from '../components/ui/dropDown'
 
-function PortfolioLog(): React.ReactElement {
-  const { portfolioLog, loading, resetPortfolio } = usePortfolioStore()
+interface PortfolioLogProps {
+  model: string;
+  setModel: (name: string) => void;
+}
+
+function PortfolioLog(props: PortfolioLogProps): React.ReactElement {
+  const { model, setModel } = props
+  const { portfolioLog, loading, resetPortfolio, getPortfolio } = usePortfolioStore()
+  const [ showingPortfolioLog, setShowingPortfolioLog ] = useState<PortfolioLogInterface[]>([])
   let hedge: boolean = false
 
   useEffect(() => {
     resetPortfolio()
   }, [])
+
+  useEffect(() => {
+    setShowingPortfolioLog(getPortfolio(model))
+  }, [portfolioLog, model])
 
   function renderPNL(pnl: number): React.ReactNode {
     let color = 'blue'
@@ -40,11 +52,16 @@ function PortfolioLog(): React.ReactElement {
     return (<Tag color={color}>{percent} %</Tag>)
   }
 
+  function renderDates(timestamp :number): React.ReactNode {
+    const dateLocalString = new Date(timestamp).toLocaleString()
+    return <p>{dateLocalString}</p>
+  }
+
   let content: React.ReactNode = (
     <Spin tip='Loading' size='large' spinning={loading}>
-      <Table size='middle' dataSource={portfolioLog} pagination={{ pageSize: portfolioLog.length }} scroll={{ y: 55 * 7.5 }}>
+      <Table size='middle' dataSource={showingPortfolioLog} pagination={{ pageSize: 100 }} scroll={{ y: 55 * 7.5 }}>
         <Table.ColumnGroup title='Basic Information'>
-          <Table.Column key='date' title='Date' dataIndex='Date' sorter={(a, b) => new Date(a['Date']).getTime() - new Date(b['Date']).getTime()} />
+          <Table.Column key='date' title='Date' dataIndex='Date' sorter={(a, b) => a['Date'] - b['Date']} render={renderDates} />
           <Table.Column key='cash' title='Cash' dataIndex='Cash' sorter={(a, b) => a['Cash'] - b['Cash']} />
         </Table.ColumnGroup>
         <Table.ColumnGroup title='Equities Allocation'>
@@ -68,9 +85,12 @@ function PortfolioLog(): React.ReactElement {
     </Spin>
   )
 
+  const models = Array.from(portfolioLog.keys())
+  let extra :React.ReactNode[] = React.Children.toArray([<DropDown model={model} models={models} setModel={setModel} />])
+
   return (
     <Layout.Content className='layout-content' style={{ flexDirection: 'column' }}>
-      <Header title='Portfolio Records' subtitle='Portfolio Records at the end of the each Trading Day' />
+      <Header title='Portfolio Records' subtitle='Portfolio Records at the end of the each Trading Day' extra={extra}/>
       <Div>
         {content}
       </Div>

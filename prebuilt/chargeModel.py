@@ -1,4 +1,4 @@
-from ..lib.chargeModel import BaseChargeModel
+from lib.chargeModel import BaseChargeModel
 
 class SimpleChargeModel(BaseChargeModel):
   def __init__(self, each_charge):

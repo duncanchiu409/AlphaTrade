@@ -3,14 +3,14 @@ import difference from 'lodash/difference'
 import { TechnicalIndicator, MainIndicators, SubIndicators } from '../../config/indicators'
 import { Chart, init, dispose, YAxisType, CandleStyle, CandleType, KLineData, registerIndicator } from 'klinecharts'
 import { Div } from '../ui/animated'
-import { TradesFormat } from '../../api/getFakeTradingRecords'
+import { TradesInterface } from '../../store/useTradeRecordsStore'
 import '../../App.css'
 
 const CHART_ID = 'kline-chart'
 
 export interface KlineChartProps {
   klineData: KLineData[];
-  trades: TradesFormat[];
+  trades: TradesInterface[];
   type: CandleType;
   axis: YAxisType;
   mainIndicators: TechnicalIndicator[];

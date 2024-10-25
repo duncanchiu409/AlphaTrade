@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from ..lib.strategies import BaseHold
-from ..lib.strategies import BaseSignalGenerator
+from lib.strategies import BaseHold
+from lib.strategies import BaseSignalGenerator
 
 class EMAGoldenCrossSignal(BaseHold):
 	def __init__(self, lower, upper):

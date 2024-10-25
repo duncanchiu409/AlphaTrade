@@ -10,7 +10,8 @@ import { EquitiesTable } from '../components/tables/equities'
 import { AiFillSliders, AiOutlineAreaChart, AiOutlinePercentage, AiOutlineFieldNumber, AiTwotoneSetting } from "react-icons/ai";
 import { Header } from '../components/ui/header'
 import { useKLineStore } from '../store/useKLineStore'
-import { useTradeRecordsStore } from '../store/useTradeRecordsStore'
+import { useTradeRecordsStore, TradesInterface } from '../store/useTradeRecordsStore'
+import { DropDown } from '../components/ui/dropDown'
 
 interface IndicatorsListProps {
   title: string;
@@ -85,16 +86,36 @@ display: flex;
 flex-direction: column;
 `
 
-export default function Chart(): React.ReactElement {
+interface ChartProps {
+  model: string;
+  setModel: (name: string) => void;
+}
+
+export default function Chart(props :ChartProps): React.ReactElement {
+  const [ equityName, setEquityName ] = useState<string>('')
+  const { model, setModel } = props
+  const [ showingKLine, setShowingKLine ] = useState<KLineData[]>([])
   const { type, axis, primary, secondary, setPrimary, setSecondary, setType, setAxis } = useIndicatorsStore()
-  const [showModal, setShowModal] = useState<boolean>(false)
-  const { klineData, resetKlineData } = useKLineStore()
-  const { trades, loading, resetTradeRecords } = useTradeRecordsStore()
+  const [ showModal, setShowModal ] = useState<boolean>(false)
+  const { klineData, resetKlineData, getKlineData } = useKLineStore()
+  const { trades, loading, resetTradeRecords, getTradeRecords } = useTradeRecordsStore()
+  const [ showingTrades, setShowingTrades ] = useState<TradesInterface[]>([])
 
   useEffect(() => {
     resetKlineData()
     resetTradeRecords()
   }, [])
+
+  useEffect(() => {
+    setShowingKLine(getKlineData(model, equityName))
+    setShowingTrades(getTradeRecords(model))
+  }, [trades, klineData, model])
+
+  useEffect(() => {
+    setShowingKLine(getKlineData(model, equityName))
+  }, [equityName, model])
+
+  const models = Array.from(trades.keys())
 
   const typeIcon: Record<string, React.ReactNode> = {
     [CandleType.CandleSolid]: (
@@ -139,6 +160,7 @@ export default function Chart(): React.ReactElement {
   };
 
   const extra: React.ReactNode[] = React.Children.toArray([
+    <DropDown model={model} models={models} setModel={setModel}/>,
     <Button variant='link' icon={typeIcon[type]} />,
     <Button variant='link' icon={axisIcon[axis]} />,
     <Button variant='link' onClick={openModal} icon={<AiTwotoneSetting size={25} />} />,
@@ -148,12 +170,12 @@ export default function Chart(): React.ReactElement {
     <Layout.Content className='layout-content'>
       <Wrapper1>
         <Header title='Charts' subtitle='Chart for Backtest' extra={extra} />
-        <KlineChart klineData={klineData} trades={trades} type={type} axis={axis} mainIndicators={primary} subIndicators={secondary} />
+        <KlineChart klineData={showingKLine} trades={showingTrades} type={type} axis={axis} mainIndicators={primary} subIndicators={secondary} />
       </Wrapper1>
       <Wrapper2>
         <Header title='Equity Name' subtitle='Equities traded in this Backtest' />
         <Spin tip='Loading' spinning={loading}>
-          <EquitiesTable trades={trades}/>
+          <EquitiesTable trades={showingTrades} setEquity={setEquityName}/>
         </Spin>
       </Wrapper2>
       <Modal open={showModal} onOk={handleOk} onCancel={handleCancel}>

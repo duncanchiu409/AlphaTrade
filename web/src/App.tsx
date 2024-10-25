@@ -8,10 +8,12 @@ import Chart from './pages/chart'
 import Portfolio from './pages/portfolio'
 import Trades from './pages/trades'
 import PortfolioLog from './pages/portfolioLog'
+import Config from './pages/config'
 import { usePortfolioStore } from './store/usePortfolioStore'
 
 function App(): React.ReactElement {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const [ model, setModel ] = useState<string>('SPAC Insider Logistic Regression Model')
+  const [ theme, setTheme ] = useState<'light' | 'dark'>('light')
   const portfolioStore = usePortfolioStore()
   const { pathname } = window.location
 
@@ -42,11 +44,11 @@ function App(): React.ReactElement {
       </Layout.Sider>
       <Layout className='layout'>
           <Routes>
-            <Route path={Paths.HOME} element={<Chart />} />
-            <Route path={Paths.TRADES} element={<Trades />} />
-            <Route path={Paths.PORTFOLIOLOG} element={<PortfolioLog />} />
-            <Route path={Paths.PORTFOLIO} element={<Portfolio />} />
-            {/* <Route path={Paths.CONFIG} element={<Config />} /> */}
+            <Route path={Paths.HOME} element={<Chart model={model} setModel={setModel}/>} />
+            <Route path={Paths.TRADES} element={<Trades model={model} setModel={setModel}/>} />
+            <Route path={Paths.PORTFOLIOLOG} element={<PortfolioLog model={model} setModel={setModel}/>} />
+            <Route path={Paths.PORTFOLIO} element={<Portfolio model={model} setModel={setModel}/>} />
+            <Route path={Paths.CONFIG} element={<Config model={model}/>} />
           </Routes>
       </Layout>
     </Layout>

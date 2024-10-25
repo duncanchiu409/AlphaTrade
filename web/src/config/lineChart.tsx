@@ -19,3 +19,8 @@ export const LineChartConfig: Record<LineChartID, LineChartColor> = {
   [LineChartID.HEDGE]: LineChartColor.YELLOW,
   [LineChartID.TOTAL]: LineChartColor.PINK
 }
+
+export const LineChartYAXIS: Record<string, string> = {
+  'percentage': 'Total % PNL',
+  'normal': 'Total'
+}

@@ -1,16 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, Layout, Tag, Typography, Spin } from 'antd'
-import { useTradeRecordsStore } from '../store/useTradeRecordsStore'
+import { useTradeRecordsStore, TradesInterface } from '../store/useTradeRecordsStore'
 import { Header } from '../components/ui/header'
 import { Div } from '../components/ui/animated'
+import { DropDown } from '../components/ui/dropDown'
 import '../App.css'
 
-function Trades(): React.ReactElement {
-  const { trades, loading, resetTradeRecords } = useTradeRecordsStore()
+interface TradesProps {
+  model: string;
+  setModel: (name: string) => void;
+}
+
+function Trades(props: TradesProps): React.ReactElement {
+  const { model, setModel } = props
+  const [showingTrades, setShowingTrades] = useState<TradesInterface[]>([])
+  const { trades, loading, resetTradeRecords, getTradeRecords } = useTradeRecordsStore()
 
   useEffect(() => {
     resetTradeRecords()
   }, [])
+
+  useEffect(() => {
+    setShowingTrades((cur) => getTradeRecords(model))
+  }, [trades, model])
 
   function renderExitType(exitType: string): React.ReactNode {
     let color = 'blue'
@@ -31,7 +43,7 @@ function Trades(): React.ReactElement {
     if (pnl > 0) {
       color = 'green'
     }
-    else if(pnl == 0){
+    else if (pnl == 0) {
       color = 'orange'
     }
     else if (pnl < 0) {
@@ -45,13 +57,18 @@ function Trades(): React.ReactElement {
     if (percent > 0) {
       color = 'green'
     }
-    else if(percent == 0){
+    else if (percent == 0) {
       color = 'orange'
     }
     else if (percent < 0) {
       color = 'red'
     }
     return (<Tag color={color}>{percent} %</Tag>)
+  }
+
+  function renderDates(timestamp: number): React.ReactNode {
+    const dateLocalString = new Date(timestamp).toLocaleString()
+    return <p>{dateLocalString}</p>
   }
 
   const filters = [
@@ -62,13 +79,13 @@ function Trades(): React.ReactElement {
 
   let content: React.ReactNode = (
     <Spin tip='Loading' spinning={loading} size='large'>
-      <Table size='middle' dataSource={trades} pagination={{ pageSize: trades.length }} scroll={{ y: 55 * 7.5 }}>
+      <Table size='small' dataSource={showingTrades} pagination={{ pageSize: 100 }} scroll={{ y: 55 * 7.5 }}>
         <Table.ColumnGroup title='Trade'>
           <Table.Column key='orderNo' title='Order no' dataIndex='Order no' />
           <Table.Column key='equityName' title='Equity Name' dataIndex='Equity Name' />
-          <Table.Column key='entryTime' title='Entry Time' dataIndex='Entry Time' />
+          <Table.Column key='entryTime' title='Entry Time' dataIndex='Entry Time' render={renderDates} sorter={(a, b) => a['Entry Time'] - b['Entry Time']} />
           <Table.Column key='entryPrice' title='Entry Price' dataIndex='Entry Price' sorter={(a, b) => a['Entry Price'] - b['Entry Price']} />
-          <Table.Column key='exitTime' title='Exit Time' dataIndex='Exit Time' />
+          <Table.Column key='exitTime' title='Exit Time' dataIndex='Exit Time' render={renderDates} sorter={(a, b) => a['Entry Time'] - b['Entry Time']} />
           <Table.Column key='exitPrice' title='Exit Price' dataIndex='Exit Price' sorter={(a, b) => a['Exit Price'] - b['Exit Price']} />
         </Table.ColumnGroup>
         <Table.ColumnGroup title='Information'>
@@ -82,9 +99,12 @@ function Trades(): React.ReactElement {
       </Table>
     </Spin>)
 
+  const models = Array.from(trades.keys())
+  let extra: React.ReactNode[] = React.Children.toArray([<DropDown model={model} models={models} setModel={setModel} />])
+
   return (
     <Layout.Content className='layout-content' style={{ flexDirection: 'column' }}>
-      <Header title='Trading Records' subtitle='Executed trading records in this Model' />
+      <Header title='Trading Records' subtitle='Executed trading records in this Model' extra={extra} />
       <Div>
         {content}
       </Div>

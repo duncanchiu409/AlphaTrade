@@ -1,4 +1,4 @@
-from ..lib.portfolioAllocations import BasePortfolioAllocation
+from lib.portfolioAllocations import BasePortfolioAllocation
 
 class PercentagePortfolioAllocation(BasePortfolioAllocation):
 	def __init__(self, capital, percent):

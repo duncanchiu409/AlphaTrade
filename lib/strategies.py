@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-from ..utils.dates import findDatetime
+from utils.dates import findDatetime
 
 class BaseSignalGenerator:
     def set_model_data_path(self, model_data_path):

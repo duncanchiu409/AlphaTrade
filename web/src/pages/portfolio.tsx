@@ -9,7 +9,9 @@ import { StatsTable } from '../components/tables/stats'
 import { AiOutlinePercentage, AiOutlineFieldNumber } from "react-icons/ai";
 import '../App.css'
 import { loadPortfolioData } from '../api/getFakePortfolioLog'
-import { LineChartID, LineChartConfig } from '../config/lineChart'
+import { LineChartID, LineChartConfig, LineChartYAXIS } from '../config/lineChart'
+import { usePortfolioStore, PortfolioLogInterface } from '../store/usePortfolioStore'
+import { Div } from '../components/ui/animated'
 
 const Wrapper1 = styled.div`
 height: 80%;
@@ -23,55 +25,71 @@ padding-right: 4em;
 flex-direction: column;
 `
 
-const LineChartIds = [LineChartID.CASH, LineChartID.ALLOCATED, LineChartID.TOTAL]
+interface PortfolioProps {
+  model: string;
+  setModel: (name: string) => void
+}
 
-function Portfolio(): React.ReactElement {
-  const fakeData = loadPortfolioData()
-  const chartData: Serie[] = [
-    // {
-    //   id: LineChartID.CASH,
-    //   color: LineChartConfig[LineChartID.CASH],
-    //   data: fakeData.filter((_, i) => i % 15 == 0).map(value => {
-    //     return {
-    //       x: value['Date'],
-    //       y: value[LineChartID.CASH]
-    //     }
-    //   })
-    // },
-    // {
-    //   id: LineChartID.ALLOCATED,
-    //   color: LineChartConfig[LineChartID.ALLOCATED],
-    //   data: fakeData.filter((_, i) => i % 15 == 0).map(value => {
-    //     return {
-    //       x: value['Date'],
-    //       y: value[LineChartID.ALLOCATED]
-    //     }
-    //   })
-    // },
-    {
-      id: LineChartID.TOTAL,
-      color: LineChartConfig[LineChartID.TOTAL],
-      data: fakeData.filter((_, i) => i % 15 == 0).map(value => {
-        return {
-          x: value['Date'],
-          y: value[LineChartID.TOTAL]
-        }
-      })
-    }
-  ]
+function Portfolio(props: PortfolioProps): React.ReactElement {
+  const [axis, setAxis] = useState<YAxisType>(YAxisType.Normal)
+  const { portfolioLog, loading, resetPortfolio, getPortfolio } = usePortfolioStore()
+  const models = Array.from(portfolioLog.keys())
+  const [chartData, setChartData] = useState<any[]>([])
+
+  useEffect(() => {
+    resetPortfolio()
+  }, [])
+
+  const axisIcon: Record<string, React.ReactNode> = {
+    [YAxisType.Percentage]: (
+      <AiOutlineFieldNumber
+        size={25}
+        onClick={() => setAxis(YAxisType.Normal)}
+      />
+    ),
+    [YAxisType.Normal]: (
+      <AiOutlinePercentage
+        size={25}
+        onClick={() => setAxis(YAxisType.Percentage)}
+      />
+    )
+  }
+
+  function convert(val: PortfolioLogInterface, axis: YAxisType): number {
+    const t = LineChartYAXIS[axis]
+    return t === 'Total' ? val['Total'] : val['Total % PNL']
+  }
+
+  useEffect(() => {
+    const data = models.map((modelName: string) => {
+      const data = getPortfolio(modelName)
+      const dataPoint = parseInt((data.length / 20).toFixed())
+      return {
+        id: modelName,
+        // color: LineChartConfig[LineChartID.TOTAL],
+        data: data.filter((_, i) => i % dataPoint === 0).map(value => {
+          return {
+            x: new Date(value['Date']).toLocaleString(),
+            y: convert(value, axis)
+          }
+        })
+      }
+    })
+    setChartData(data)
+  }, [portfolioLog, axis])
+
+  const extra = [axisIcon[axis]]
 
   return (
-    <Layout.Content className='layout-content'>
-      <Wrapper1>
-        <Header title='Portfolio' subtitle='Line Chart for Portfolio' />
-        <LineChart data={chartData} />
-      </Wrapper1>
-      <Wrapper2>
-        <Header title='Strategy Stats' subtitle='Table for Strategy' />
-        <Spin tip='Loading' size='large' spinning={false} >
-          <StatsTable />
-        </Spin>
-      </Wrapper2>
+    <Layout.Content className='layout-content' style={{ flexDirection: 'column' }}>
+      <Spin tip='Loading' size='large' spinning={loading}>
+        <div style={{marginRight: '110px'}}>
+          <Header title='Portfolio' subtitle='Line Chart for Portfolio' extra={extra} />
+        </div>
+        <div style={{ height: '80vh' }}>
+          <LineChart data={chartData} />
+        </div>
+      </Spin>
     </Layout.Content>
   )
 }

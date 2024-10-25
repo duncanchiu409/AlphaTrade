@@ -1,28 +1,29 @@
 import { KLineData } from 'klinecharts'
 import file from '../data/kline.json'
 
-interface csvFormat {
-  Datetime: string,
-  "Adj Close": number,
-  Open: number,
-  High: number,
-  Low: number,
-  Close: number,
-  Volume: number
+export interface jsonBarFormat {
+  key: string;
+  value: {
+    name: string;
+    value: {
+      name: string;
+      value: BarFormat[];
+    }[];
+  }[];
 }
 
-export function getFakeData() {
-  const equities = file as csvFormat[]
-  const klinedata: KLineData[] = equities.map(i => {
-    const timestamp = new Date(i.Datetime).getTime()
-    return {
-      timestamp: timestamp,
-      open: parseFloat(i.Open.toFixed(2)),
-      high: parseFloat(i.High.toFixed(2)),
-      low: parseFloat(i.Low.toFixed(2)),
-      close: parseFloat(i.Close.toFixed(2)),
-      volume: i.Volume
-    }
-  })
-  return klinedata
+export interface BarFormat {
+  "Date": string | undefined;
+  "Datetime": string | undefined;
+  "Adj Close": number,
+  "Open": number,
+  "High": number,
+  "Low": number,
+  "Close": number,
+  "Volume": number
+}
+
+export function getFakeData(): jsonBarFormat {
+  const dataJSON = file as jsonBarFormat
+  return dataJSON
 }

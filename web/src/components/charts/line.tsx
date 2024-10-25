@@ -23,27 +23,28 @@ export function LineChart(props: LineChartProps): React.ReactElement {
       type: 'linear',
       min: 'auto',
       max: 'auto',
-      stacked: true,
+      stacked: false,
       reverse: false
     }}
     yFormat=" >-.2f"
-    curve="cardinal"
+    curve="linear"
     axisTop={null}
     axisRight={null}
-    axisBottom={{
-      tickSize: 5,
-      tickPadding: 5,
-      tickRotation: 0,
-      legend: 'Date',
-      legendOffset: 36,
-      legendPosition: 'middle',
-      truncateTickAt: 0
-    }}
+    axisBottom={null}
+    // axisBottom={{
+    //   tickSize: 5,
+    //   tickPadding: 5,
+    //   tickRotation: 0,
+    //   legend: 'Date',
+    //   legendOffset: 36,
+    //   legendPosition: 'middle',
+    //   truncateTickAt: 0
+    // }}
     axisLeft={{
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'Amount',
+      legend: '',
       legendOffset: -40,
       legendPosition: 'middle',
       truncateTickAt: 0
@@ -61,7 +62,7 @@ export function LineChart(props: LineChartProps): React.ReactElement {
         anchor: 'bottom-right',
         direction: 'column',
         justify: false,
-        translateX: 100,
+        translateX: -150,
         translateY: 0,
         itemsSpacing: 0,
         itemDirection: 'left-to-right',

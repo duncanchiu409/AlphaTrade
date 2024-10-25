@@ -1,8 +1,8 @@
-from ..lib.portfolioAllocations import PercentagePortfolioAllocation
-from ..lib.strategies import EMAGoldenCrossSignal, EMAReverseGoldenCrossSignal
-from ..lib.riskManagement import StopLoss, TakeProfitStopLoss
-from .chargeModel import SimpleChargeModel
-from ..lib.strategies import BaseModel
+from lib.portfolioAllocations import PercentagePortfolioAllocation
+from lib.strategies import EMAGoldenCrossSignal, EMAReverseGoldenCrossSignal
+from lib.riskManagement import StopLoss, TakeProfitStopLoss
+from chargeModel import SimpleChargeModel
+from lib.strategies import BaseModel
 
 class EMAGoldenCrossModel(BaseModel):
     def __init__(self):

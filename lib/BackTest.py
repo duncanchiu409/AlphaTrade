@@ -5,7 +5,7 @@ from yfinance import shared
 import os
 from tabulate import tabulate, SEPARATING_LINE
 import shortuuid
-from ..utils.dates import findDatetime
+from utils.dates import findDatetime
 
 class BackTest:
     def __init__(self, model, location='models'):
@@ -219,7 +219,6 @@ class BackTest:
             hedges_risk_reward = f"1:{round(abs(avg_hedges_profit_per_trade/avg_hedges_loss_per_trade), 2)}" if avg_hedges_loss_per_trade else "N/A"
 
             data += [
-                SEPARATING_LINE,
                 ('% Hedges PNL', hedges_pnl),
                 ('Hedges Winners', hedges_winners),
                 ('Hedges Losers', hedges_losers),
@@ -245,7 +244,6 @@ class BackTest:
             combined_risk_reward = f"1:{round(abs(avg_combined_profit_per_trade/avg_combined_loss_per_trade), 2)}" if avg_combined_loss_per_trade else "N/A"
 
             data += [
-                SEPARATING_LINE,
                 ('% Combined PNL', combined_pnl),
                 ('Combined Winners', combined_winners),
                 ('Combined Losers', combined_losers),
@@ -269,7 +267,6 @@ class BackTest:
         max_draw_down = (self.portfolio_records['Total'].min() - self.portfolio_records['Total'].max()) / self.portfolio_records['Total'].max()
 
         data += [
-            SEPARATING_LINE,
             ("Starting Equity", self.portfolio_records['Total'].values[0]),
             ("Ending Equity", self.portfolio_records['Total'].values[-1]),
             ("% MaxDrawDown", round(max_draw_down * 100, 3)),
@@ -277,7 +274,8 @@ class BackTest:
             ("Sortino Ratio", round((mean * N - rf) / downside_sigma / np.sqrt(N), 3))
         ]
 
-        self.table = tabulate(data, headers=['Parameters', 'Values'], tablefmt='psql')
+
+        return tabulate(data, headers=['Parameters', 'Values'], tablefmt='psql')
 
     def give_analysis(self):
         # for interval in self.model.universe_management.intervals:
@@ -343,4 +341,4 @@ class BackTest:
 
         self.give_analysis()
         with open(f"{self.model.model_base_path}/summary/table.txt", 'w') as f:
-            print(self.table, file=f)
+            print(self.stats(), file=f)

@@ -1,4 +1,4 @@
-from ..lib.riskManagement import BaseRiskManagement
+from lib.riskManagement import BaseRiskManagement
 import pandas as pd
 
 class StopLoss(BaseRiskManagement):
