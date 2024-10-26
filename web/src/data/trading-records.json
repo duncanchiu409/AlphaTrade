@@ -2,10 +2,10 @@
     "key": "Trading Records",
     "value": [
         {
-            "name": "SPAC Insider Logistic Regression Model",
+            "name": "SPAC Insider Logistic Regression Short Model",
             "value": [
                 {
-                    "Order no": "LZXQD6AQExh99Dr2ZLF3Wh",
+                    "Order no": "djqbWDh3g6oMXV7Au3xhPN",
                     "Equity Name": "JOBY",
                     "Trade": "Short",
                     "Entry Time": "2022-08-10 00:00:00+00:00",
@@ -20,7 +20,7 @@
                     "Holding Period": "727 days"
                 },
                 {
-                    "Order no": "UCgUKx5meJavH6gStKN76T",
+                    "Order no": "7ZDoJ7PSjw6wdBQT7WibWm",
                     "Equity Name": "NRGV",
                     "Trade": "Short",
                     "Entry Time": "2022-08-11 00:00:00+00:00",
@@ -35,7 +35,7 @@
                     "Holding Period": "726 days"
                 },
                 {
-                    "Order no": "RaSkrWBL2Sy29UWHmZJJ5F",
+                    "Order no": "GJ928Fn66uuKnnhja4TMp2",
                     "Equity Name": "MCOM",
                     "Trade": "Short",
                     "Entry Time": "2022-08-12 00:00:00+00:00",
@@ -50,7 +50,7 @@
                     "Holding Period": "725 days"
                 },
                 {
-                    "Order no": "LdMNXyqgfhZxnTv3mSnt5p",
+                    "Order no": "ZbJx8CrXV3vHe6gZcRiZ2z",
                     "Equity Name": "MIMOQ",
                     "Trade": "Short",
                     "Entry Time": "2022-08-15 00:00:00+00:00",
@@ -65,7 +65,7 @@
                     "Holding Period": "722 days"
                 },
                 {
-                    "Order no": "fTmePaGxYtqbuLy2vD6FQp",
+                    "Order no": "AXpv7yXM3aiTeCy9E9jSGG",
                     "Equity Name": "LIDR",
                     "Trade": "Short",
                     "Entry Time": "2022-08-16 00:00:00+00:00",
@@ -80,7 +80,7 @@
                     "Holding Period": "721 days"
                 },
                 {
-                    "Order no": "RsXV7y2nDSiMzkfR8SbpjK",
+                    "Order no": "VRUazmS6Pz2BvbPpV9tEzM",
                     "Equity Name": "XOS",
                     "Trade": "Short",
                     "Entry Time": "2022-08-19 00:00:00+00:00",
@@ -95,7 +95,7 @@
                     "Holding Period": "718 days"
                 },
                 {
-                    "Order no": "cWfZwhcAiMiNtBG8AxY3WY",
+                    "Order no": "F277KFmx4wjKB6LhiuVLZh",
                     "Equity Name": "RGTI",
                     "Trade": "Short",
                     "Entry Time": "2022-09-01 00:00:00+00:00",
@@ -110,7 +110,7 @@
                     "Holding Period": "705 days"
                 },
                 {
-                    "Order no": "H8gQeTHjhmzDuNMD58dYtA",
+                    "Order no": "RSJy6X3qksVwfsKovM6cBF",
                     "Equity Name": "DNA",
                     "Trade": "Short",
                     "Entry Time": "2022-09-16 00:00:00+00:00",
@@ -125,7 +125,7 @@
                     "Holding Period": "690 days"
                 },
                 {
-                    "Order no": "MskvfxPf2N3P3U33Wphs7D",
+                    "Order no": "cg6Bj27YGroi2Xp4RyLdbb",
                     "Equity Name": "PDYN",
                     "Trade": "Short",
                     "Entry Time": "2022-09-26 00:00:00+00:00",
@@ -140,7 +140,7 @@
                     "Holding Period": "680 days"
                 },
                 {
-                    "Order no": "T8LtceJbHZkiPsUvQzYxm5",
+                    "Order no": "NNU8JC6y7Rdq8veHonkNFS",
                     "Equity Name": "LLAP",
                     "Trade": "Short",
                     "Entry Time": "2022-09-26 00:00:00+00:00",
@@ -155,7 +155,7 @@
                     "Holding Period": "680 days"
                 },
                 {
-                    "Order no": "Gs3oTAXf4qBbvZZAUfd2Pq",
+                    "Order no": "PwWPeezmF6cTsvyTpLgqwJ",
                     "Equity Name": "SWVL",
                     "Trade": "Short",
                     "Entry Time": "2022-09-30 00:00:00+00:00",
@@ -170,7 +170,7 @@
                     "Holding Period": "676 days"
                 },
                 {
-                    "Order no": "FetyxAbaLQpVh288aKvdFq",
+                    "Order no": "NKxdtS6erJodX4YDTuDt4a",
                     "Equity Name": "GWH",
                     "Trade": "Short",
                     "Entry Time": "2022-10-07 00:00:00+00:00",
@@ -185,7 +185,7 @@
                     "Holding Period": "669 days"
                 },
                 {
-                    "Order no": "7CENS4sMjQGvBPttwjcE4K",
+                    "Order no": "4zxatJigDz5nExwygBSam7",
                     "Equity Name": "NVTS",
                     "Trade": "Short",
                     "Entry Time": "2022-10-19 00:00:00+00:00",
@@ -200,7 +200,7 @@
                     "Holding Period": "657 days"
                 },
                 {
-                    "Order no": "Ry52MdBzoahNvKX7szDLnV",
+                    "Order no": "jXYCGDf9NnxyKM7YQisYPn",
                     "Equity Name": "SMR",
                     "Trade": "Short",
                     "Entry Time": "2022-11-02 00:00:00+00:00",
@@ -215,7 +215,7 @@
                     "Holding Period": "643 days"
                 },
                 {
-                    "Order no": "QRFap4UGQLEd6zgAZPKr4i",
+                    "Order no": "9ueTxkNTNXMsudJxjDKwos",
                     "Equity Name": "DCGO",
                     "Trade": "Short",
                     "Entry Time": "2022-11-07 00:00:00+00:00",
@@ -230,7 +230,7 @@
                     "Holding Period": "638 days"
                 },
                 {
-                    "Order no": "ZVovgqAMbUWWzEGKqAaQR8",
+                    "Order no": "nBkPnWU9kGtHNXKKngZ6bz",
                     "Equity Name": "GROV",
                     "Trade": "Short",
                     "Entry Time": "2022-11-16 00:00:00+00:00",
@@ -245,7 +245,7 @@
                     "Holding Period": "629 days"
                 },
                 {
-                    "Order no": "VHhBubC9kmJ8EjHdavz9Sj",
+                    "Order no": "PAQfSGJU6tryvXMCDANVof",
                     "Equity Name": "PRE",
                     "Trade": "Short",
                     "Entry Time": "2022-11-17 00:00:00+00:00",
@@ -260,7 +260,7 @@
                     "Holding Period": "628 days"
                 },
                 {
-                    "Order no": "8JYf7rcsLENDoWu9znbtW4",
+                    "Order no": "9BFinpt3NRQZYJN4y4WZrT",
                     "Equity Name": "TOI",
                     "Trade": "Short",
                     "Entry Time": "2022-11-17 00:00:00+00:00",
@@ -275,7 +275,7 @@
                     "Holding Period": "628 days"
                 },
                 {
-                    "Order no": "RLBSGj9MW4KU5sK8g5pwDm",
+                    "Order no": "XQi8tk8uGFeNj4Pff3Kqbt",
                     "Equity Name": "LIFW",
                     "Trade": "Short",
                     "Entry Time": "2022-11-21 00:00:00+00:00",
@@ -290,7 +290,7 @@
                     "Holding Period": "624 days"
                 },
                 {
-                    "Order no": "ZEiitzzGtaRSySPVyWuV6h",
+                    "Order no": "NuWquaDNgXznmCfYXTc8mh",
                     "Equity Name": "LOCL",
                     "Trade": "Short",
                     "Entry Time": "2022-11-21 00:00:00+00:00",
@@ -305,7 +305,7 @@
                     "Holding Period": "624 days"
                 },
                 {
-                    "Order no": "G52Vz4nXpCnzGyR97dbJDH",
+                    "Order no": "ZD2qpFpgwMKUeNXFmhJ7rZ",
                     "Equity Name": "SKLZ",
                     "Trade": "Short",
                     "Entry Time": "2022-12-16 00:00:00+00:00",
@@ -320,7 +320,7 @@
                     "Holding Period": "599 days"
                 },
                 {
-                    "Order no": "Lp5Y45VEs9SvC59WBJkU9Z",
+                    "Order no": "PvgW8x4NDH2E4JtNMR8YYH",
                     "Equity Name": "DAVE",
                     "Trade": "Short",
                     "Entry Time": "2023-01-05 00:00:00+00:00",
@@ -335,7 +335,7 @@
                     "Holding Period": "579 days"
                 },
                 {
-                    "Order no": "KCRWU7Cq6FRpmZnWK9GXVZ",
+                    "Order no": "7yxZpRJnMJhKTAEHnAthAT",
                     "Equity Name": "SKYH",
                     "Trade": "Short",
                     "Entry Time": "2023-01-25 00:00:00+00:00",
@@ -350,7 +350,7 @@
                     "Holding Period": "559 days"
                 },
                 {
-                    "Order no": "UheYefWuL9RMBPDFzDNmNb",
+                    "Order no": "SN8EPiuninf2VFAHzZSxDq",
                     "Equity Name": "PET",
                     "Trade": "Short",
                     "Entry Time": "2023-02-09 00:00:00+00:00",
@@ -365,7 +365,7 @@
                     "Holding Period": "544 days"
                 },
                 {
-                    "Order no": "5QGdFNtDwJJa8nZmEZ5iSN",
+                    "Order no": "7TZGcdEyYMHngEqVdB5Up3",
                     "Equity Name": "ARQQ",
                     "Trade": "Short",
                     "Entry Time": "2023-03-03 00:00:00+00:00",
@@ -380,7 +380,7 @@
                     "Holding Period": "522 days"
                 },
                 {
-                    "Order no": "N4rASYBqs3tTgtcJvfYE2B",
+                    "Order no": "hLXpFL4pPHhe3EbCdFxH74",
                     "Equity Name": "GRNT",
                     "Trade": "Short",
                     "Entry Time": "2023-04-25 00:00:00+00:00",
@@ -395,7 +395,7 @@
                     "Holding Period": "469 days"
                 },
                 {
-                    "Order no": "K5yWy4Rdh67CddEtnhFCmz",
+                    "Order no": "ZgA2FmYtGF3uAXYFpNAqR8",
                     "Equity Name": "AGBA",
                     "Trade": "Short",
                     "Entry Time": "2023-05-15 00:00:00+00:00",
@@ -410,7 +410,7 @@
                     "Holding Period": "449 days"
                 },
                 {
-                    "Order no": "aAVj32hJNu9pyat5C7ybVb",
+                    "Order no": "4LspEvL6pExfzPREVDtqiK",
                     "Equity Name": "SFRT",
                     "Trade": "Short",
                     "Entry Time": "2023-05-30 00:00:00+00:00",
@@ -425,7 +425,7 @@
                     "Holding Period": "434 days"
                 },
                 {
-                    "Order no": "iDkZPuJm2ULTyQRopzVtzB",
+                    "Order no": "homx5xNtefBKXzgLGmASBp",
                     "Equity Name": "MRDB",
                     "Trade": "Short",
                     "Entry Time": "2023-06-20 00:00:00+00:00",
@@ -440,7 +440,7 @@
                     "Holding Period": "413 days"
                 },
                 {
-                    "Order no": "bz6JGXvkSga9K7uBfD9M6h",
+                    "Order no": "BRgzZbKF3qQjEHjUYS9QEW",
                     "Equity Name": "ECX",
                     "Trade": "Short",
                     "Entry Time": "2023-06-21 00:00:00+00:00",
@@ -455,7 +455,7 @@
                     "Holding Period": "412 days"
                 },
                 {
-                    "Order no": "GpUSsfSsyWgiPSKr7gk28y",
+                    "Order no": "ECp6qVxGZNeuUDmQrAuAQe",
                     "Equity Name": "GETY",
                     "Trade": "Short",
                     "Entry Time": "2023-07-21 00:00:00+00:00",
@@ -470,7 +470,7 @@
                     "Holding Period": "382 days"
                 },
                 {
-                    "Order no": "MbNXd4tGU2vVayTwzFzj2F",
+                    "Order no": "npHnUjuzYJZt5QRiDRtUxT",
                     "Equity Name": "CRGO",
                     "Trade": "Short",
                     "Entry Time": "2023-07-25 00:00:00+00:00",
@@ -485,7 +485,7 @@
                     "Holding Period": "378 days"
                 },
                 {
-                    "Order no": "9ATBbGyH563jnsyP34XJfs",
+                    "Order no": "KELLPUFsmkHyUevv6i2vTy",
                     "Equity Name": "WALD",
                     "Trade": "Short",
                     "Entry Time": "2023-07-27 00:00:00+00:00",
@@ -500,7 +500,7 @@
                     "Holding Period": "376 days"
                 },
                 {
-                    "Order no": "fut4mSv8B4kcKDs8zxvUeL",
+                    "Order no": "JVRGTTqTJrxJNtr2zspNwi",
                     "Equity Name": "AWIN",
                     "Trade": "Short",
                     "Entry Time": "2023-08-03 00:00:00+00:00",
@@ -515,7 +515,7 @@
                     "Holding Period": "369 days"
                 },
                 {
-                    "Order no": "4xvgmJNCaaLk5Px8GEHCm8",
+                    "Order no": "KMeXEyWozTrVmtQwsdigBK",
                     "Equity Name": "QBTS",
                     "Trade": "Short",
                     "Entry Time": "2023-08-07 00:00:00+00:00",
@@ -530,7 +530,7 @@
                     "Holding Period": "365 days"
                 },
                 {
-                    "Order no": "VSqQgbgAhB4rVZDrzBypGr",
+                    "Order no": "72SFtpXsuuSBbtnEzMJVWc",
                     "Equity Name": "AENT",
                     "Trade": "Short",
                     "Entry Time": "2023-08-10 00:00:00+00:00",
@@ -545,7 +545,7 @@
                     "Holding Period": "362 days"
                 },
                 {
-                    "Order no": "8JQMh5EmiAhu6K8xqiedUU",
+                    "Order no": "i2Z3ZvjfxDqxW3sXDd5yKD",
                     "Equity Name": "LUNR",
                     "Trade": "Short",
                     "Entry Time": "2023-08-14 00:00:00+00:00",
@@ -560,7 +560,7 @@
                     "Holding Period": "358 days"
                 },
                 {
-                    "Order no": "gac9bmxxzgvHzyn2vs3NDG",
+                    "Order no": "g4mHKcFcN2EmJwMaYfhwWy",
                     "Equity Name": "KITT",
                     "Trade": "Short",
                     "Entry Time": "2023-09-11 00:00:00+00:00",
@@ -575,7 +575,7 @@
                     "Holding Period": "330 days"
                 },
                 {
-                    "Order no": "6h3FHA5iWHWSEHdMAAeoTH",
+                    "Order no": "ctq5WUj8w73HFatDYiNeeo",
                     "Equity Name": "CXAI",
                     "Trade": "Short",
                     "Entry Time": "2023-09-14 00:00:00+00:00",
@@ -590,7 +590,7 @@
                     "Holding Period": "327 days"
                 },
                 {
-                    "Order no": "LYsqtCHFrZVKVwaWdEte3t",
+                    "Order no": "BF8AwrtzbUUtodKCf9UKuV",
                     "Equity Name": "RUM",
                     "Trade": "Short",
                     "Entry Time": "2023-09-18 00:00:00+00:00",
@@ -605,7 +605,7 @@
                     "Holding Period": "323 days"
                 },
                 {
-                    "Order no": "bsNkZ4Mb8KBWYwWukRA3qL",
+                    "Order no": "bh7wMQHN7EeqLQGFW2zdfb",
                     "Equity Name": "SLNAF",
                     "Trade": "Short",
                     "Entry Time": "2023-10-27 00:00:00+00:00",
@@ -620,7 +620,7 @@
                     "Holding Period": "284 days"
                 },
                 {
-                    "Order no": "NLJGHxKm8gz6djQvL4tU8q",
+                    "Order no": "cHjRb2o52qFprxgKS6naZT",
                     "Equity Name": "SDA",
                     "Trade": "Short",
                     "Entry Time": "2023-11-17 00:00:00+00:00",
@@ -635,7 +635,7 @@
                     "Holding Period": "263 days"
                 },
                 {
-                    "Order no": "GdCeYqLUutL6uouTeh68Pb",
+                    "Order no": "3oFwrMdLY2FoymcdLLsypr",
                     "Equity Name": "HUBC",
                     "Trade": "Short",
                     "Entry Time": "2023-11-28 00:00:00+00:00",
@@ -650,7 +650,7 @@
                     "Holding Period": "252 days"
                 },
                 {
-                    "Order no": "3XXiQXctWL8VJYaYpPA2vw",
+                    "Order no": "eywTkbtGheC4VPPtouJnuj",
                     "Equity Name": "CJET",
                     "Trade": "Short",
                     "Entry Time": "2023-12-01 00:00:00+00:00",
@@ -665,7 +665,7 @@
                     "Holding Period": "249 days"
                 },
                 {
-                    "Order no": "ZrKfg3LWgdVjWy3CCAQrtE",
+                    "Order no": "imJ3YEoxiZYfNJJeJSnS3g",
                     "Equity Name": "GETR",
                     "Trade": "Short",
                     "Entry Time": "2023-12-08 00:00:00+00:00",
@@ -680,7 +680,7 @@
                     "Holding Period": "242 days"
                 },
                 {
-                    "Order no": "gB8RWKpUAsGqvs492r8a48",
+                    "Order no": "M4QNSiAUe3W8S9anGLDDNT",
                     "Equity Name": "LANV",
                     "Trade": "Short",
                     "Entry Time": "2023-12-14 00:00:00+00:00",
@@ -695,7 +695,7 @@
                     "Holding Period": "236 days"
                 },
                 {
-                    "Order no": "LRirh2zgegiAQreGEtngCT",
+                    "Order no": "QPFTkXRnjtgCHw5NmanfyM",
                     "Equity Name": "MLEC",
                     "Trade": "Short",
                     "Entry Time": "2024-01-02 00:00:00+00:00",
@@ -710,7 +710,7 @@
                     "Holding Period": "217 days"
                 },
                 {
-                    "Order no": "AefYGquMdZmgVugRkJRecq",
+                    "Order no": "Ak5v2YvnEBdPBXfQEMK28N",
                     "Equity Name": "ALTI",
                     "Trade": "Short",
                     "Entry Time": "2024-01-03 00:00:00+00:00",
@@ -725,7 +725,7 @@
                     "Holding Period": "216 days"
                 },
                 {
-                    "Order no": "JJawn9xDQDyJBxfUJGNSKX",
+                    "Order no": "V3Ld4Hr7TwkiLNt42N4Ct2",
                     "Equity Name": "OBIO",
                     "Trade": "Short",
                     "Entry Time": "2024-01-26 00:00:00+00:00",
@@ -740,7 +740,7 @@
                     "Holding Period": "193 days"
                 },
                 {
-                    "Order no": "b9DdXxLRE8pvMCsZX6Zpm4",
+                    "Order no": "ZW5ohsuPmFNh9dPeEx4cyq",
                     "Equity Name": "ELIQQ",
                     "Trade": "Short",
                     "Entry Time": "2024-01-31 00:00:00+00:00",
@@ -755,7 +755,7 @@
                     "Holding Period": "188 days"
                 },
                 {
-                    "Order no": "LPjPgWNH6agRF3kYRzxSN3",
+                    "Order no": "GsGtk4qAda3go43oLfqG3N",
                     "Equity Name": "BEEP",
                     "Trade": "Short",
                     "Entry Time": "2024-02-26 00:00:00+00:00",
@@ -770,7 +770,7 @@
                     "Holding Period": "162 days"
                 },
                 {
-                    "Order no": "PpmPyudVqDVKK4K95LGGzx",
+                    "Order no": "UQCV9wWEdALeNiNWZ797gF",
                     "Equity Name": "MDAI",
                     "Trade": "Short",
                     "Entry Time": "2024-03-11 00:00:00+00:00",
@@ -785,7 +785,7 @@
                     "Holding Period": "148 days"
                 },
                 {
-                    "Order no": "TPdHfHddNrqL3jiX4RYhF4",
+                    "Order no": "iq5mpC7rwKKCGQcnHZtzr3",
                     "Equity Name": "PRST",
                     "Trade": "Short",
                     "Entry Time": "2024-03-21 00:00:00+00:00",
@@ -800,7 +800,7 @@
                     "Holding Period": "138 days"
                 },
                 {
-                    "Order no": "nyjTV2CQXZzjLktsMzVcMo",
+                    "Order no": "V8wTySCB2CEwMzN4TMu944",
                     "Equity Name": "AERT",
                     "Trade": "Short",
                     "Entry Time": "2024-04-08 00:00:00+00:00",
@@ -815,7 +815,7 @@
                     "Holding Period": "120 days"
                 },
                 {
-                    "Order no": "D3thzJiKsJFQSrQtNSR2rL",
+                    "Order no": "FrTDqP8BEoP3UkcvBAYS2C",
                     "Equity Name": "MNY",
                     "Trade": "Short",
                     "Entry Time": "2024-04-12 00:00:00+00:00",
@@ -830,7 +830,7 @@
                     "Holding Period": "116 days"
                 },
                 {
-                    "Order no": "iz3t3RhJDcKCJaJZr3MHsn",
+                    "Order no": "BmKCs8wxzq7AKPM4tFm8Pi",
                     "Equity Name": "ZAPP",
                     "Trade": "Short",
                     "Entry Time": "2024-04-29 00:00:00+00:00",
@@ -845,7 +845,7 @@
                     "Holding Period": "99 days"
                 },
                 {
-                    "Order no": "F7QTJFzRHuUTCSQyQSF73T",
+                    "Order no": "fv6gKjGDUFrbenMQiVeCLV",
                     "Equity Name": "RMCO",
                     "Trade": "Short",
                     "Entry Time": "2024-04-30 00:00:00+00:00",
@@ -860,7 +860,7 @@
                     "Holding Period": "98 days"
                 },
                 {
-                    "Order no": "BCfNbqETFSLk7JtdZaL8nk",
+                    "Order no": "Jqkm3KsBAMBdJn6pmrUSYn",
                     "Equity Name": "SOAR",
                     "Trade": "Short",
                     "Entry Time": "2024-06-03 00:00:00+00:00",
@@ -875,7 +875,7 @@
                     "Holding Period": "64 days"
                 },
                 {
-                    "Order no": "ZJvC2qygTyFPuxDqMop2Mr",
+                    "Order no": "VgTcjMiqq9bVFMHyejD3e5",
                     "Equity Name": "BNZI",
                     "Trade": "Short",
                     "Entry Time": "2024-06-14 00:00:00+00:00",
@@ -890,7 +890,7 @@
                     "Holding Period": "53 days"
                 },
                 {
-                    "Order no": "WidwDam8KN3RGFD4rZqTdM",
+                    "Order no": "eNTRpWAsENyGvEEGW7QtXf",
                     "Equity Name": "AISP",
                     "Trade": "Short",
                     "Entry Time": "2024-06-21 00:00:00+00:00",
@@ -905,7 +905,7 @@
                     "Holding Period": "46 days"
                 },
                 {
-                    "Order no": "UdBXu5QACtgaTQ4PxYVwAU",
+                    "Order no": "2WcnTNpGpDAzyausZ2kHFA",
                     "Equity Name": "LDTC",
                     "Trade": "Short",
                     "Entry Time": "2024-06-21 00:00:00+00:00",
@@ -920,7 +920,7 @@
                     "Holding Period": "46 days"
                 },
                 {
-                    "Order no": "TcYLJmBUmaHTQMS6PEeRUg",
+                    "Order no": "79Zh3trZPhFynDq22Q2cGZ",
                     "Equity Name": "ZCAR",
                     "Trade": "Short",
                     "Entry Time": "2024-06-28 00:00:00+00:00",
@@ -935,7 +935,7 @@
                     "Holding Period": "39 days"
                 },
                 {
-                    "Order no": "fCTWxT9TKqm6F7DsEuobGT",
+                    "Order no": "K66Dg2bUNSwxbp4FZGLizm",
                     "Equity Name": "PNST",
                     "Trade": "Short",
                     "Entry Time": "2024-07-01 00:00:00+00:00",
@@ -950,7 +950,7 @@
                     "Holding Period": "36 days"
                 },
                 {
-                    "Order no": "6f79DZn8Z2dbHzBkFG7RQa",
+                    "Order no": "SzwjcsTPrguPp8JpmKvNSk",
                     "Equity Name": "HWH",
                     "Trade": "Short",
                     "Entry Time": "2024-07-08 00:00:00+00:00",
@@ -965,7 +965,7 @@
                     "Holding Period": "29 days"
                 },
                 {
-                    "Order no": "kCRjbcFh7sbJdQid5Hszxn",
+                    "Order no": "T2mcp3ReCKK9uefi7TnJTM",
                     "Equity Name": "HOVR",
                     "Trade": "Short",
                     "Entry Time": "2024-07-12 00:00:00+00:00",
@@ -980,7 +980,7 @@
                     "Holding Period": "25 days"
                 },
                 {
-                    "Order no": "ChUouBJEXxrGnXuZERKiCV",
+                    "Order no": "F9K2wKgDRYNoCzYKiA3TKD",
                     "Equity Name": "CTCX",
                     "Trade": "Short",
                     "Entry Time": "2024-07-15 00:00:00+00:00",
@@ -995,7 +995,7 @@
                     "Holding Period": "22 days"
                 },
                 {
-                    "Order no": "Zpi9sgGygrNE2Ei3YgMBvG",
+                    "Order no": "N3eUxwcBz7FSKmzSGFqSRb",
                     "Equity Name": "CSLR",
                     "Trade": "Short",
                     "Entry Time": "2024-07-17 00:00:00+00:00",
@@ -1010,7 +1010,7 @@
                     "Holding Period": "20 days"
                 },
                 {
-                    "Order no": "fNNC58TccYFd6ztd9cwMHB",
+                    "Order no": "VFdF35wMFqdZsLTFjy6Qeq",
                     "Equity Name": "PSQH",
                     "Trade": "Short",
                     "Entry Time": "2024-07-19 00:00:00+00:00",
@@ -1025,7 +1025,7 @@
                     "Holding Period": "18 days"
                 },
                 {
-                    "Order no": "FkQqBDVim8asTQEsrXo4Q8",
+                    "Order no": "amJSXkd6JxkRwqvzqFHCTb",
                     "Equity Name": "TRUG",
                     "Trade": "Short",
                     "Entry Time": "2024-07-31 00:00:00+00:00",
@@ -1045,7 +1045,7 @@
             "name": "SPAC Insider Logistic Regression Long Model",
             "value": [
                 {
-                    "Order no": "aSh4vKLBhw9KWE55LWHa6E",
+                    "Order no": "6JPXv7ePUK2whoMZNkg24b",
                     "Equity Name": "CPTN",
                     "Trade": "Short",
                     "Entry Time": "2022-08-10 00:00:00+00:00",
@@ -1060,7 +1060,7 @@
                     "Holding Period": "727 days"
                 },
                 {
-                    "Order no": "jGPkbrxkeL5nzbWbzDvGsm",
+                    "Order no": "SLYQGptsjDGnaviEEEJ4Aq",
                     "Equity Name": "AMPS",
                     "Trade": "Short",
                     "Entry Time": "2022-09-09 00:00:00+00:00",
@@ -1075,7 +1075,7 @@
                     "Holding Period": "697 days"
                 },
                 {
-                    "Order no": "fadgD86XpkLoXk4CWmzn4H",
+                    "Order no": "BfV4tEeVME5JEuRygrXJJb",
                     "Equity Name": "LILM",
                     "Trade": "Short",
                     "Entry Time": "2022-09-14 00:00:00+00:00",
@@ -1090,7 +1090,7 @@
                     "Holding Period": "692 days"
                 },
                 {
-                    "Order no": "csWmbx578R9pLnoTMAWKCL",
+                    "Order no": "HtsqNorSbvFrwwo9EWiP9A",
                     "Equity Name": "LMDXF",
                     "Trade": "Short",
                     "Entry Time": "2022-09-28 00:00:00+00:00",
@@ -1105,7 +1105,7 @@
                     "Holding Period": "678 days"
                 },
                 {
-                    "Order no": "iWA5gc4Cz7i397Yk7wmnyx",
+                    "Order no": "aKTLyHvnqdz7qE33ZmtTGi",
                     "Equity Name": "IONQ",
                     "Trade": "Short",
                     "Entry Time": "2022-09-30 00:00:00+00:00",
@@ -1120,7 +1120,7 @@
                     "Holding Period": "676 days"
                 },
                 {
-                    "Order no": "PLS89tBDjEWFDfgWMscteJ",
+                    "Order no": "gnBHehgqJ9FNgQP6D3PGYa",
                     "Equity Name": "ROIV",
                     "Trade": "Short",
                     "Entry Time": "2022-09-30 00:00:00+00:00",
@@ -1135,7 +1135,7 @@
                     "Holding Period": "676 days"
                 },
                 {
-                    "Order no": "RHDE3uF6peSjtYSUKswnDw",
+                    "Order no": "4WREmpaMQcXtRMoTeak3ZQ",
                     "Equity Name": "WBX",
                     "Trade": "Short",
                     "Entry Time": "2022-10-03 00:00:00+00:00",
@@ -1150,7 +1150,7 @@
                     "Holding Period": "673 days"
                 },
                 {
-                    "Order no": "YngCTfLSJ27ZWeL6d7CdPL",
+                    "Order no": "drKwUJkc6WNB9EAnC4Medp",
                     "Equity Name": "ARBE",
                     "Trade": "Short",
                     "Entry Time": "2022-10-07 00:00:00+00:00",
@@ -1165,7 +1165,7 @@
                     "Holding Period": "669 days"
                 },
                 {
-                    "Order no": "HrJxeRzAuykcuapf9yc6n8",
+                    "Order no": "NipQ3VRfqApnFYMdRxMz2K",
                     "Equity Name": "BTMD",
                     "Trade": "Short",
                     "Entry Time": "2022-11-28 00:00:00+00:00",
@@ -1180,7 +1180,7 @@
                     "Holding Period": "617 days"
                 },
                 {
-                    "Order no": "myk5vdpdjoXAotaEtZYXeP",
+                    "Order no": "FT39Yz5BotsxT7m99yG2gP",
                     "Equity Name": "CTV",
                     "Trade": "Short",
                     "Entry Time": "2022-11-30 00:00:00+00:00",
@@ -1195,7 +1195,7 @@
                     "Holding Period": "615 days"
                 },
                 {
-                    "Order no": "aGxzjR6UaCSsAhy2JrseaB",
+                    "Order no": "RU65ET38CDednS4mEui5Vw",
                     "Equity Name": "PROK",
                     "Trade": "Short",
                     "Entry Time": "2023-01-12 00:00:00+00:00",
@@ -1210,7 +1210,7 @@
                     "Holding Period": "572 days"
                 },
                 {
-                    "Order no": "UzroYeQceANppvEt6Ey7Sk",
+                    "Order no": "9EJfmnBNgD2YcyG23G4kHV",
                     "Equity Name": "MOND",
                     "Trade": "Short",
                     "Entry Time": "2023-01-18 00:00:00+00:00",
@@ -1225,7 +1225,7 @@
                     "Holding Period": "566 days"
                 },
                 {
-                    "Order no": "UqvJK4WXZYrCQJ3YJ9fv2G",
+                    "Order no": "nPdmAHhoM9r88NKnqFCwzj",
                     "Equity Name": "OPAL",
                     "Trade": "Short",
                     "Entry Time": "2023-01-23 00:00:00+00:00",
@@ -1240,7 +1240,7 @@
                     "Holding Period": "561 days"
                 },
                 {
-                    "Order no": "RRRw5HHYTmrySGx8TmPnXe",
+                    "Order no": "G3jrEFEhz9auN5hv4jnb4n",
                     "Equity Name": "LCID",
                     "Trade": "Short",
                     "Entry Time": "2023-01-23 00:00:00+00:00",
@@ -1255,7 +1255,7 @@
                     "Holding Period": "561 days"
                 },
                 {
-                    "Order no": "dAMq3udtpHmSZ2Smp8Nu9c",
+                    "Order no": "fAQmTWZWyNXTY4DyJ92xFa",
                     "Equity Name": "SATL",
                     "Trade": "Short",
                     "Entry Time": "2023-01-25 00:00:00+00:00",
@@ -1270,7 +1270,7 @@
                     "Holding Period": "559 days"
                 },
                 {
-                    "Order no": "6pVTrQvL8bpHQcXF33zsRm",
+                    "Order no": "L29o6C7b7UTG93jUDrrgT3",
                     "Equity Name": "STIXF",
                     "Trade": "Short",
                     "Entry Time": "2023-02-03 00:00:00+00:00",
@@ -1285,7 +1285,7 @@
                     "Holding Period": "550 days"
                 },
                 {
-                    "Order no": "HYr7zkSyHTGhE3z5dMrBvX",
+                    "Order no": "CaMHnFTF3xuYE5WqD2gixk",
                     "Equity Name": "ISPO",
                     "Trade": "Short",
                     "Entry Time": "2023-02-13 00:00:00+00:00",
@@ -1300,7 +1300,7 @@
                     "Holding Period": "540 days"
                 },
                 {
-                    "Order no": "BTJLmPq3AXH2sJupn5ZC68",
+                    "Order no": "QzaZvebfCULG7XaQCkoHW6",
                     "Equity Name": "PGRU",
                     "Trade": "Short",
                     "Entry Time": "2023-03-17 00:00:00+00:00",
@@ -1315,7 +1315,7 @@
                     "Holding Period": "508 days"
                 },
                 {
-                    "Order no": "oPSsu5ry7zUuDE9dEPxueM",
+                    "Order no": "kwNJtHtu6Gu82oKjenaNLf",
                     "Equity Name": "FRGE",
                     "Trade": "Short",
                     "Entry Time": "2023-03-21 00:00:00+00:00",
@@ -1330,7 +1330,7 @@
                     "Holding Period": "504 days"
                 },
                 {
-                    "Order no": "F7acARYgKrkKM5qNmmNBDv",
+                    "Order no": "VzuuSX3jNtbKgkrs9cddui",
                     "Equity Name": "SHFS",
                     "Trade": "Short",
                     "Entry Time": "2023-03-28 00:00:00+00:00",
@@ -1345,7 +1345,7 @@
                     "Holding Period": "497 days"
                 },
                 {
-                    "Order no": "XjkT4gEGjBnoVrzwCGRcP2",
+                    "Order no": "afAbz9bPgoWEEtJkLB6pt7",
                     "Equity Name": "MLTX",
                     "Trade": "Short",
                     "Entry Time": "2023-04-05 00:00:00+00:00",
@@ -1360,7 +1360,7 @@
                     "Holding Period": "489 days"
                 },
                 {
-                    "Order no": "7DwkgMTVMhW4oaLiynAdCv",
+                    "Order no": "iTwgYBb4Jr2isEBaxYYgWA",
                     "Equity Name": "SCLX",
                     "Trade": "Short",
                     "Entry Time": "2023-05-10 00:00:00+00:00",
@@ -1375,7 +1375,7 @@
                     "Holding Period": "454 days"
                 },
                 {
-                    "Order no": "oNV8F2pycWm9tiHET3RVSN",
+                    "Order no": "8SykdKqoXqrx6iVLpDJmGp",
                     "Equity Name": "OCS",
                     "Trade": "Short",
                     "Entry Time": "2023-06-05 00:00:00+00:00",
@@ -1390,7 +1390,7 @@
                     "Holding Period": "428 days"
                 },
                 {
-                    "Order no": "RMNAYGnGKB6vLm3q2H4Ves",
+                    "Order no": "VnWCuQdUYurnPzMCVghc46",
                     "Equity Name": "PL",
                     "Trade": "Short",
                     "Entry Time": "2023-06-06 00:00:00+00:00",
@@ -1405,7 +1405,7 @@
                     "Holding Period": "427 days"
                 },
                 {
-                    "Order no": "drtuSv56L2wrDwZEA2hVkF",
+                    "Order no": "ZjL6kJMtcQ96v9shQc3S8u",
                     "Equity Name": "SYM",
                     "Trade": "Short",
                     "Entry Time": "2023-06-07 00:00:00+00:00",
@@ -1420,7 +1420,7 @@
                     "Holding Period": "426 days"
                 },
                 {
-                    "Order no": "RYg9roUN2cquG5ZRpzgzUj",
+                    "Order no": "4SPabAQdcjjjBCnEr42zfU",
                     "Equity Name": "MLGO",
                     "Trade": "Short",
                     "Entry Time": "2023-06-09 00:00:00+00:00",
@@ -1435,7 +1435,7 @@
                     "Holding Period": "424 days"
                 },
                 {
-                    "Order no": "gE5nG8syRGNB526g9vFRQr",
+                    "Order no": "XN63HWf65zXJTC3oDqbHNX",
                     "Equity Name": "CACO",
                     "Trade": "Short",
                     "Entry Time": "2023-06-16 00:00:00+00:00",
@@ -1450,7 +1450,7 @@
                     "Holding Period": "417 days"
                 },
                 {
-                    "Order no": "5owhmFow8zTRm3BVLCCqZw",
+                    "Order no": "7GpJEiZd7etUpD2Y43NUt8",
                     "Equity Name": "SLND",
                     "Trade": "Short",
                     "Entry Time": "2023-08-14 00:00:00+00:00",
@@ -1465,7 +1465,7 @@
                     "Holding Period": "358 days"
                 },
                 {
-                    "Order no": "UtkjLwAJ9DTvN33FSjUtD8",
+                    "Order no": "mTQDJqmse9wDGBgX9zvLAS",
                     "Equity Name": "VGAS",
                     "Trade": "Short",
                     "Entry Time": "2023-08-15 00:00:00+00:00",
@@ -1480,7 +1480,7 @@
                     "Holding Period": "357 days"
                 },
                 {
-                    "Order no": "UTmarTw3uhhWFdKPGAopG4",
+                    "Order no": "MbVah5SnHJYBreXbQnR6PR",
                     "Equity Name": "SMX",
                     "Trade": "Short",
                     "Entry Time": "2023-09-07 00:00:00+00:00",
@@ -1495,7 +1495,7 @@
                     "Holding Period": "334 days"
                 },
                 {
-                    "Order no": "KUUNgUgUL6kghPpBVohE2x",
+                    "Order no": "dyHKE6b6NncsKanku8Tkj5",
                     "Equity Name": "LNZA",
                     "Trade": "Short",
                     "Entry Time": "2024-02-09 00:00:00+00:00",
@@ -1510,7 +1510,7 @@
                     "Holding Period": "179 days"
                 },
                 {
-                    "Order no": "TNuX8h5Vi7vw9PntBS7tBg",
+                    "Order no": "VMheGj5yGDpYd4GeUBZisE",
                     "Equity Name": "OCEA",
                     "Trade": "Short",
                     "Entry Time": "2024-02-14 00:00:00+00:00",
@@ -1525,7 +1525,7 @@
                     "Holding Period": "174 days"
                 },
                 {
-                    "Order no": "eqboi534ywrwZsffBjm8XX",
+                    "Order no": "naDNGQZwowDHZjXHxyLtfT",
                     "Equity Name": "CLDI",
                     "Trade": "Short",
                     "Entry Time": "2024-03-12 00:00:00+00:00",
@@ -1540,7 +1540,7 @@
                     "Holding Period": "147 days"
                 },
                 {
-                    "Order no": "UR6GBRue8ogw9kovS6JMkQ",
+                    "Order no": "G3GpiSNP3EWi2jiSKCosZg",
                     "Equity Name": "GFR",
                     "Trade": "Short",
                     "Entry Time": "2024-03-20 00:00:00+00:00",
@@ -1555,7 +1555,7 @@
                     "Holding Period": "139 days"
                 },
                 {
-                    "Order no": "fy72p92pxQq4qoMcnfaEu9",
+                    "Order no": "8ZXjCJd5CKZW8eZ89z6AZn",
                     "Equity Name": "COCH",
                     "Trade": "Short",
                     "Entry Time": "2024-04-01 00:00:00+00:00",
@@ -1570,7 +1570,7 @@
                     "Holding Period": "127 days"
                 },
                 {
-                    "Order no": "9Mzm7y7ZEqHrTArNSnoBdn",
+                    "Order no": "L7vnkFQHqfXuRa4NWNdxdW",
                     "Equity Name": "ESLA",
                     "Trade": "Short",
                     "Entry Time": "2024-04-01 00:00:00+00:00",
@@ -1585,7 +1585,7 @@
                     "Holding Period": "127 days"
                 },
                 {
-                    "Order no": "MMpKnCoWfMDL5uVcLDpPYk",
+                    "Order no": "8XRYABzfAjbwmr8yTnMFha",
                     "Equity Name": "EGOXF",
                     "Trade": "Short",
                     "Entry Time": "2024-04-19 00:00:00+00:00",
@@ -1600,7 +1600,7 @@
                     "Holding Period": "109 days"
                 },
                 {
-                    "Order no": "XiWva5apzBTRCCBCmC5YEF",
+                    "Order no": "SxrZDMMpJNnHYRm8BRskU7",
                     "Equity Name": "CAPT",
                     "Trade": "Short",
                     "Entry Time": "2024-05-15 00:00:00+00:00",
@@ -1615,7 +1615,7 @@
                     "Holding Period": "83 days"
                 },
                 {
-                    "Order no": "D5Q87c2JNQJn4dhLpa7xCs",
+                    "Order no": "DeMWdLazfDKV9Pt8a6VvEa",
                     "Equity Name": "NPWR",
                     "Trade": "Short",
                     "Entry Time": "2024-06-10 00:00:00+00:00",
@@ -1630,7 +1630,7 @@
                     "Holding Period": "57 days"
                 },
                 {
-                    "Order no": "8WoyX9obpQonzqHVnxYVtY",
+                    "Order no": "eYrai6rKZD8oTTVo45QWex",
                     "Equity Name": "SVMH",
                     "Trade": "Short",
                     "Entry Time": "2024-06-10 00:00:00+00:00",
@@ -1645,7 +1645,7 @@
                     "Holding Period": "57 days"
                 },
                 {
-                    "Order no": "KSewFnK8qqAoMLUR82W9f3",
+                    "Order no": "YfFfCjN6TQzv4g8WXBbFYd",
                     "Equity Name": "ECDA",
                     "Trade": "Short",
                     "Entry Time": "2024-06-12 00:00:00+00:00",
@@ -1660,7 +1660,7 @@
                     "Holding Period": "55 days"
                 },
                 {
-                    "Order no": "7LwaaS9rvR4yF3E7RU4FHK",
+                    "Order no": "dAYAkqN43jy4nB4QHzHi6G",
                     "Equity Name": "PBM",
                     "Trade": "Short",
                     "Entry Time": "2024-07-25 00:00:00+00:00",

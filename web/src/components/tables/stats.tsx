@@ -1,87 +1,98 @@
 import { Descriptions, DescriptionsProps } from 'antd'
+import { TableInterface } from '../../store/useTableStore'
 import React from 'react'
 
-export function StatsTable(): React.ReactElement {
+interface StatsTableProps {
+  table: TableInterface;
+}
+
+function convertPercent(i: number): string{
+  return i.toFixed() + ' %'
+}
+
+export function StatsTable(props: StatsTableProps): React.ReactElement {
+  const { table } = props
+
   const items: DescriptionsProps['items'] = [
     {
       label: 'Total Trade Scripts',
       span: { xl: 3, xxl: 3 },
-      children: 69,
+      children: table['Total Trade Scripts'],
     },
     {
       label: 'Total Trade',
       span: { xl: 3, xxl: 3 },
-      children: 69,
+      children: table['Total Trade'],
     },
     {
       label: '% PNL',
       span: { xl: 3, xxl: 3 },
-      children: '94.26 %',
+      children: convertPercent(table['% PNL']),
     },
     {
       label: 'Winners',
       span: { xl: 3, xxl: 3 },
-      children: 48,
+      children: table['Winners'],
     },
     {
       label: 'Losers',
       span: { xl: 3, xxl: 3 },
-      children: 21,
+      children: table['Losers'],
     },
     {
       label: '% Win Ratio',
       span: { xl: 3, xxl: 3 },
-      children: '69.57 %',
+      children: convertPercent(table['% Win Ratio']),
     },
     {
       label: '% Total Profit',
       span: { xl: 3, xxl: 3 },
-      children: '117.42 %',
+      children: convertPercent(table['% Total Profit']),
     },
     {
       label: '% Average Profit per Trade',
       span: { xl: 3, xxl: 3 },
-      children: '2.45 %',
+      children: convertPercent(table['% Average Profit per Trade']),
     },
     {
       label: '% Average Loss per Trade',
       span: { xl: 3, xxl: 3 },
-      children: '-1.1 %',
+      children: convertPercent(table['% Average Loss per Trade']),
     },
     {
       label: '% Average PNL per Trade',
       span: { xl: 3, xxl: 3 },
-      children: '1.37 %',
+      children: convertPercent(table['% Average PNL per Trade']),
     },
     {
       label: 'Risk Reward',
       span: { xl: 3, xxl: 3 },
-      children: '1:2.23',
+      children: table['Risk Reward'],
     },
-    {
-      label: 'Starting Equity',
-      span: { xl: 3, xxl: 3 },
-      children: '$1000000',
-    },
-    {
-      label: 'Ending Equity',
-      span: { xl: 3, xxl: 3 },
-      children: '$1942570.436',
-    },
+    // {
+    //   label: 'Starting Equity',
+    //   span: { xl: 3, xxl: 3 },
+    //   children: '$1000000',
+    // },
+    // {
+    //   label: 'Ending Equity',
+    //   span: { xl: 3, xxl: 3 },
+    //   children: '$1942570.436',
+    // },
     {
       label: '% MaxDrawDown',
       span: { xl: 3, xxl: 3 },
-      children: '-50.284 %',
+      children: convertPercent(table['% MaxDrawDown']),
     },
     {
       label: 'Sharpe Ratio',
       span: { xl: 3, xxl: 3 },
-      children: '2.877',
+      children: table['Sharpe Ratio'],
     },
     {
       label: 'Sortino Ratio',
       span: { xl: 3, xxl: 3 },
-      children: '4.329',
+      children: table['Sortino Ratio'],
     },
   ]
 

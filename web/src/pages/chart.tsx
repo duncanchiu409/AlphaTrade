@@ -94,6 +94,7 @@ interface ChartProps {
 export default function Chart(props :ChartProps): React.ReactElement {
   const [ equityName, setEquityName ] = useState<string>('')
   const { model, setModel } = props
+  const [ models, setModels ] = useState<string[]>([])
   const [ showingKLine, setShowingKLine ] = useState<KLineData[]>([])
   const { type, axis, primary, secondary, setPrimary, setSecondary, setType, setAxis } = useIndicatorsStore()
   const [ showModal, setShowModal ] = useState<boolean>(false)
@@ -107,6 +108,10 @@ export default function Chart(props :ChartProps): React.ReactElement {
   }, [])
 
   useEffect(() => {
+    setModels(Array.from(trades.keys()))
+  }, [trades])
+
+  useEffect(() => {
     setShowingKLine(getKlineData(model, equityName))
     setShowingTrades(getTradeRecords(model))
   }, [trades, klineData, model])
@@ -114,8 +119,6 @@ export default function Chart(props :ChartProps): React.ReactElement {
   useEffect(() => {
     setShowingKLine(getKlineData(model, equityName))
   }, [equityName, model])
-
-  const models = Array.from(trades.keys())
 
   const typeIcon: Record<string, React.ReactNode> = {
     [CandleType.CandleSolid]: (

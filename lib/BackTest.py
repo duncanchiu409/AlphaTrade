@@ -3,6 +3,7 @@ import pandas as pd
 import yfinance as yf
 from yfinance import shared
 import os
+import json
 from tabulate import tabulate, SEPARATING_LINE
 import shortuuid
 from utils.dates import findDatetime
@@ -274,7 +275,8 @@ class BackTest:
             ("Sortino Ratio", round((mean * N - rf) / downside_sigma / np.sqrt(N), 3))
         ]
 
-
+        self.data = data
+        pd.DataFrame(dict(self.data), index=[0]).to_csv(f"{self.model.model_base_path}/summary/table.csv")
         return tabulate(data, headers=['Parameters', 'Values'], tablefmt='psql')
 
     def give_analysis(self):

@@ -1,0 +1,55 @@
+{
+    "key": "Tables",
+    "value": [
+        {
+            "name": "SPAC Insider Logistic Regression Short Model",
+            "value": [
+                {
+                    "Unnamed: 0": 0,
+                    "Total Trade Scripts": 69,
+                    "Total Trade": 69,
+                    "% PNL": 68.13,
+                    "Winners": 60,
+                    "Losers": 9,
+                    "% Win Ratio": 86.96,
+                    "% Total Profit": 71.5,
+                    "% Total Loss": -3.38,
+                    "% Average Profit per Trade": 1.19,
+                    "% Average Loss per Trade": -0.38,
+                    "% Average PNL per Trade": 0.99,
+                    "Risk Reward": "1:3.13",
+                    "Starting Equity": 1000000,
+                    "Ending Equity": 1681286.875,
+                    "% MaxDrawDown": -41.755,
+                    "Sharpe Ratio": 1.814,
+                    "Sortino Ratio": 2.67
+                }
+            ]
+        },
+        {
+            "name": "SPAC Insider Logistic Regression Long Model",
+            "value": [
+                {
+                    "Unnamed: 0": 0,
+                    "Total Trade Scripts": 42,
+                    "Total Trade": 42,
+                    "% PNL": 31.25,
+                    "Winners": 32,
+                    "Losers": 10,
+                    "% Win Ratio": 76.19,
+                    "% Total Profit": 53.19,
+                    "% Total Loss": -21.94,
+                    "% Average Profit per Trade": 1.66,
+                    "% Average Loss per Trade": -2.19,
+                    "% Average PNL per Trade": 0.74,
+                    "Risk Reward": "1:0.76",
+                    "Starting Equity": 1000000,
+                    "Ending Equity": 1312472.952,
+                    "% MaxDrawDown": -39.65,
+                    "Sharpe Ratio": 0.561,
+                    "Sortino Ratio": 0.816
+                }
+            ]
+        }
+    ]
+}

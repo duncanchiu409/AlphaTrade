@@ -9,17 +9,21 @@ import Portfolio from './pages/portfolio'
 import Trades from './pages/trades'
 import PortfolioLog from './pages/portfolioLog'
 import Config from './pages/config'
-import { usePortfolioStore } from './store/usePortfolioStore'
+import { useTableStore } from './store/useTableStore'
 
 function App(): React.ReactElement {
-  const [ model, setModel ] = useState<string>('SPAC Insider Logistic Regression Model')
+  const [ model, setModel ] = useState<string>('')
   const [ theme, setTheme ] = useState<'light' | 'dark'>('light')
-  const portfolioStore = usePortfolioStore()
   const { pathname } = window.location
+  const { tables, resetTables } = useTableStore()
 
   useEffect(() => {
-    portfolioStore.resetPortfolio()
+    resetTables()
   }, [])
+
+  useEffect(() => {
+    setModel(Array.from(tables.keys())[0])
+  }, [tables])
 
   return (
     <Layout>
@@ -48,7 +52,7 @@ function App(): React.ReactElement {
             <Route path={Paths.TRADES} element={<Trades model={model} setModel={setModel}/>} />
             <Route path={Paths.PORTFOLIOLOG} element={<PortfolioLog model={model} setModel={setModel}/>} />
             <Route path={Paths.PORTFOLIO} element={<Portfolio model={model} setModel={setModel}/>} />
-            <Route path={Paths.CONFIG} element={<Config model={model}/>} />
+            <Route path={Paths.CONFIG} element={<Config model={model} setModel={setModel}/>} />
           </Routes>
       </Layout>
     </Layout>
