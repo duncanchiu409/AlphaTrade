@@ -140,10 +140,22 @@ class YourCustomPortfolioAllocation(BasePortfolioAllocation):
 		super().__init__(capital)
 		self.percent = round(float(percent) / 100.0, 4)
 
-	def allocate(self, portfolio):
+	def allocate(self, portfolio): # Must be the same method name
 		allocation = round(self.free_capital * self.percent, 2)
 		self.free_capital = round(self.free_capital - allocation, 2)
 		return allocation
+```
+
+#### On usage Portfolio Management of Model
+
+```python
+# On Usage for the Model
+class ExampleModel(BaseModel):
+  def __init__(self):
+    super.__init__()
+      # ...
+      self.portfolio_management = YourCustomPortfolioAllocation(1000, 20)
+      # ...
 ```
 
 ### 🍎 Alpha Model <a id='alpha' />
@@ -153,6 +165,66 @@ The model includes several pre-built Alpha. I would implement more in the future
 # 1. BaseHold
 # 2. BaseShort
 # 3. EMAGoldenCrossSignal
+```
+
+#### On usage of Alpha Model
+
+##### BaseHolde
+
+```python
+# On Usage for the Model
+class ExampleModel(BaseModel):
+  def __init__(self):
+    super.__init__()
+      # ...
+      self.strategies = BaseHold()
+      # ...
+```
+
+##### BaseShort
+
+```python
+# On Usage for the Model
+class ExampleModel(BaseModel):
+  def __init__(self):
+    super.__init__()
+      # ...
+      self.strategies = BaseShort()
+      # ...
+```
+
+### ☣️ Risk Management <a id='risk' />
+Default Model does not use any risk control Mechanism. Prebuilt there is two models for usage as listed below.
+
+```python
+# 1. ./prebuilt/riskManagement/TakeProfitStopLoss
+# 2. ./prebuilt/riskManagement/TraillingStopLoss
+```
+
+#### On Usage of Risk Management Model
+
+##### TakeProfitStopLoss
+
+```python
+# On Usage for the Model
+class ExampleModel(BaseModel):
+  def __init__(self):
+    super.__init__()
+      # ...
+      self.risk_control = TakeProfitStopLoss(200, 30)
+      # ...
+```
+
+##### TraillingStopLoss
+
+```python
+# On Usage for the Model
+class ExampleModel(BaseModel):
+  def __init__(self):
+    super.__init__()
+      # ...
+      self.risk_control = TraillingStopLoss(30)
+      # ...
 ```
 
 ## 🏕️ Examples <a id='examples' />

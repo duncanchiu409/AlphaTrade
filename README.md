@@ -1,6 +1,5 @@
 <p align="center">
-  <img width="100px" src="./assets/logo.png">
-  <h1 align="center">AlphaTrade</h1>
+  <img width="400px" src="./assets/screenshots/logo.png">
   <p align="center">Open Source Backtester with React UI</p>
 </p>
 
@@ -52,7 +51,7 @@ This system has lots of features such as:
 
 ## ⚡️ Technologies <a id="technologies" />
 
-<img width="98%" src="./assets/stack.png" alt="stack" />
+<img width="10%" src="./assets/1174949_js_react js_logo_react_react native_icon.png" alt="react-logo" /> <img width="10%" src="./assets/4375050_logo_python_icon.png" alt="python-logo" />
 
 ## 🍕 Getting Started <a id="getting-started" />
 
@@ -77,8 +76,6 @@ We can customize trading strategies either via the JupterNotebook directly.
 Currently, only few trading strategies like RSI, MACD, MA Golden Cross are supported and I plan to add more soon.
 
 More documentation in the [here](./docs/Documentation.md)
-
-<img width="60%" src="./assets/screenshots/dashboard/config-strategy.png" alt="config-strategy" />
 
 ## 👏 Contribute <a id="contribute" />
 
